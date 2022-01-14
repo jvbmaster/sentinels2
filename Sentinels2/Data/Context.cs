@@ -10,9 +10,11 @@ namespace Sentinels2.Data
         public DbSet<DemandaExtra> DemandaExtras { get; set; }
         public DbSet<Desligamento> Desligamentos { get; set; }
         public DbSet<Escala> Escalas { get; set; }
+        public DbSet<EscalaAnexo> EscalaAnexos { get; set; }
         public DbSet<Feriado> Feriados { get; set; }
         public DbSet<LicencaPremio> LicencasPremio { get; set; }
         public DbSet<OpcaoDeFerias> OpcoesDeFerias { get; set; }
+        public DbSet<PassaAgulha> PassaAgulhas { get; set; }
         public DbSet<Patrimonio> Patrimonios { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Vigia> Vigias { get; set; }
@@ -49,6 +51,10 @@ namespace Sentinels2.Data
             modelBuilder.Entity<Escala>().HasKey(e => e.OS);
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<EscalaAnexo>().ToTable("EscalaAnexo");
+            modelBuilder.Entity<EscalaAnexo>().HasKey(e => e.CodAnexo);
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Feriado>().ToTable("Feriado");
             modelBuilder.Entity<Feriado>().HasKey(e => e.Data);
             base.OnModelCreating(modelBuilder);
@@ -61,6 +67,10 @@ namespace Sentinels2.Data
             modelBuilder.Entity<OpcaoDeFerias>().HasKey(e => e.AnoReferencia);
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<PassaAgulha>().ToTable("PassaAgulha");
+            modelBuilder.Entity<PassaAgulha>().HasKey(e => e.Id);
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Patrimonio>().ToTable("Patrimonio");
             modelBuilder.Entity<Patrimonio>().HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);
@@ -70,7 +80,7 @@ namespace Sentinels2.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Vigia>().ToTable("Vigia");
-            modelBuilder.Entity<Vigia>().HasKey(e => e.Matricula);
+            modelBuilder.Entity<Vigia>().HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);
         }
     }

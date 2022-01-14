@@ -11,7 +11,7 @@ namespace Sentinels2
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new AreaDeTrabalho());
+            Application.Run(new BoasVindas());
         }
     }
 }

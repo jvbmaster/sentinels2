@@ -53,6 +53,10 @@ namespace Sentinels2.Data
             modelBuilder.Entity<Feriado>().HasKey(e => e.Data);
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<LicencaPremio>().ToTable("LicencaPremio");
+            modelBuilder.Entity<LicencaPremio>().HasKey(e => e.Certidao);
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<OpcaoDeFerias>().ToTable("OpcaoDeFerias");
             modelBuilder.Entity<OpcaoDeFerias>().HasKey(e => e.AnoReferencia);
             base.OnModelCreating(modelBuilder);

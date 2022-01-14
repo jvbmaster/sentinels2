@@ -85,6 +85,25 @@ namespace Sentinels2.Views
             
         }
 
-        
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (w != null)
+            {
+                w.Dispose();
+            }
+            panelContent.Controls.Clear();
+
+            //w = new WorkflowByPerson();
+            //w.TopLevel = false;
+            //w.AutoScroll = true;
+            //w.FormBorderStyle = FormBorderStyle.None;
+            //w.WindowState = FormWindowState.Maximized;
+            //w.Parent = panelContent;
+            //
+            //panelContent.Controls.Add(w);
+            //w.Show();
+
+            MessageBox.Show("Em breve!");
+        }
     }
 }

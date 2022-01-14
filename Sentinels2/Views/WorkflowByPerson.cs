@@ -9,9 +9,14 @@ namespace Sentinels2
 {
     public partial class WorkflowByPerson : Form
     {
+        private List<Vigia> vigias = VigiaCRUD.GetAll().ToList();
+        private Vigia v;
+        private int modoExibicao = 0;
+        private ContextMenuStrip menu = new ContextMenuStrip();
         public WorkflowByPerson()
         {
             InitializeComponent();
+            opAfastamento.Checked = true;
         }
 
         private void LoadVigias(string busca = "")
@@ -19,8 +24,8 @@ namespace Sentinels2
             try
             {
                 dgvPessoal.DataSource = (busca == "") 
-                    ? VigiaCRUD.GetAll().ToList() 
-                    : VigiaCRUD.Get(p => p.Nome.Contains(busca.ToUpper())).ToList();
+                    ? vigias : vigias.Where(p => p.Nome.Contains(busca.ToUpper())).ToList();
+
                 for (int i = 1; i <= dgvPessoal.Columns.Count; i++)
                 {
                     dgvPessoal.Columns[i].Visible = false;
@@ -30,18 +35,16 @@ namespace Sentinels2
             {
                 statusLabel.Text = $"VGM_LOAD: {ex.Message}";
             }
+            statusLabel.Text = $"VGM_LOAD: {dgvPessoal.RowCount} de {vigias.Count} carregados";
         }
 
         private void LoadInfoPanel()
         {
             try
             {
-                lbNome.Text = dgvPessoal.CurrentRow.Cells["Nome"].Value.ToString();
-                lbApelido.Text = dgvPessoal.CurrentRow.Cells["Id"].Value.ToString();
-                lbCargo.Text = dgvPessoal.CurrentRow.Cells["Cargo"].Value.ToString();
-                lbAdimissao.Text = DateTime.Parse(dgvPessoal.CurrentRow.Cells["Admissao"].Value.ToString()).ToString("dd/MM/yyyy");
-                lbTempoDeCasa.Text = $"{DatesWorkflow.TempoDeCasa(DateTime.Parse(dgvPessoal.CurrentRow.Cells["Admissao"].Value.ToString()))} anos de casa";
-                lbIdade.Text = DatesWorkflow.IdadePrecisa(DateTime.Parse(dgvPessoal.CurrentRow.Cells["Nascimento"].Value.ToString()));
+                lbNome.Text = $"{v.Nome} ({v.Id}) - {DatesWorkflow.IdadePrecisa(v.Nascimento)}";
+                lbCargo.Text = $"{v.Cargo} desde {v.Admissao.ToString("dd/MM/yyyy")}";
+                lbApelido.Text = $"{DatesWorkflow.TempoDeCasa(v.Admissao)} anos de casa";
             }
             catch (Exception)
             {
@@ -53,21 +56,34 @@ namespace Sentinels2
         {
             try
             {
-                dgvAfastamentos.DataSource = AfastamentoCRUD.Get(p => p.Funcionario.Equals(dgvPessoal.CurrentRow.Cells[0].Value.ToString())).ToList();
+                dgvDataPerson.DataSource = AfastamentoCRUD.Get(p => p.Funcionario.Equals(v.Id)).ToList();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                statusLabel.Text = $"LOAD_AFASTAMENTOS: {ex}";
             }
+            statusLabel.Text = $"{dgvDataPerson.RowCount} registros";
         }
 
+        private void LoadHoraExtras()
+        {
+            try
+            {
+                dgvDataPerson.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(v.Id) && p.TipoPagamento.Equals("EXTRA")).OrderBy(p => p.Data).ToList();
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Text = $"LOAD_HEXTRAS: {ex}";
+            }
+            statusLabel.Text = $"{dgvDataPerson.RowCount} registros";
+        }
 
         public void Afastamentos()
         {
             try
             {
                 Relatorios report = new Relatorios();
-                Afastamento afastamento = AfastamentoCRUD.Find(dgvAfastamentos.CurrentRow.Cells[0].Value.ToString());
+                Afastamento afastamento = AfastamentoCRUD.Find(dgvDataPerson.CurrentRow.Cells[0].Value.ToString());
                 switch (afastamento.TipoAfastamento)
                 {
                     case "Abono": report.GerarAbonada(afastamento); break;
@@ -107,11 +123,13 @@ namespace Sentinels2
 
         private void dgvPessoal_SelectionChanged(object sender, EventArgs e)
         {
+            v = vigias.Find(p => p.Id.Equals(dgvPessoal.CurrentRow.Cells[0].Value.ToString()));
+
             LoadInfoPanel();
-            switch (tabControl2.SelectedIndex)
+            switch (modoExibicao)
             {
                 case 0: LoadAfastamentos(); break;
-                case 1: statusLabel.Text = $"TB_CTRL: {tabControl2.SelectedIndex}"; break;
+                case 1: LoadHoraExtras(); break;
             }
             
         }
@@ -126,7 +144,7 @@ namespace Sentinels2
         {
             try
             {
-                VigiaCRUD.Load(dgvPessoal.CurrentRow.Cells[0].Value.ToString());
+                VigiaCRUD.Load(v.Id);
 
                 new NewVigia().ShowDialog();
             }
@@ -138,7 +156,24 @@ namespace Sentinels2
 
         private void btReport_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Tudo certo aqui");
+            MessageBox.Show($"");
+        }
+
+        private void opAfastamento_CheckedChanged(object sender, EventArgs e)
+        {
+            modoExibicao = 0;
+            LoadAfastamentos();
+        }
+
+        private void opHoraExtra_CheckedChanged(object sender, EventArgs e)
+        {
+            modoExibicao = 1;
+            LoadHoraExtras();
+        }
+
+        private void dgvDataPerson_MultiSelectChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

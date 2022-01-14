@@ -92,6 +92,7 @@
             this.button2.TabIndex = 0;
             this.button2.Text = "Por prédio";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -158,27 +159,27 @@
             // testesToolStripMenuItem
             // 
             this.testesToolStripMenuItem.Name = "testesToolStripMenuItem";
-            this.testesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testesToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.testesToolStripMenuItem.Text = "Testes";
             this.testesToolStripMenuItem.Click += new System.EventHandler(this.testesToolStripMenuItem_Click);
             // 
             // preferênciasToolStripMenuItem1
             // 
             this.preferênciasToolStripMenuItem1.Name = "preferênciasToolStripMenuItem1";
-            this.preferênciasToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.preferênciasToolStripMenuItem1.Size = new System.Drawing.Size(167, 22);
             this.preferênciasToolStripMenuItem1.Text = "Preferências";
             // 
             // testeProcessStartToolStripMenuItem
             // 
             this.testeProcessStartToolStripMenuItem.Name = "testeProcessStartToolStripMenuItem";
-            this.testeProcessStartToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.testeProcessStartToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.testeProcessStartToolStripMenuItem.Text = "Teste ProcessStart";
             this.testeProcessStartToolStripMenuItem.Click += new System.EventHandler(this.testeProcessStartToolStripMenuItem_Click);
             // 
             // wordInteropToolStripMenuItem
             // 
             this.wordInteropToolStripMenuItem.Name = "wordInteropToolStripMenuItem";
-            this.wordInteropToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.wordInteropToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.wordInteropToolStripMenuItem.Text = "Word Interop";
             this.wordInteropToolStripMenuItem.Click += new System.EventHandler(this.wordInteropToolStripMenuItem_Click);
             // 

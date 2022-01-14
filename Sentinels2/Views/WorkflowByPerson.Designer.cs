@@ -1,4 +1,7 @@
-﻿namespace Sentinels2
+﻿using Sentinels2.Data;
+using Sentinels2.Views;
+
+namespace Sentinels2
 {
     partial class WorkflowByPerson
     {
@@ -28,14 +31,11 @@
             this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lbIdade = new System.Windows.Forms.Label();
             this.lbCargo = new System.Windows.Forms.Label();
-            this.lbTempoDeCasa = new System.Windows.Forms.Label();
-            this.lbAdimissao = new System.Windows.Forms.Label();
             this.lbApelido = new System.Windows.Forms.Label();
+            this.btEditar = new System.Windows.Forms.Button();
+            this.btNovo = new System.Windows.Forms.Button();
             this.lbNome = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -43,18 +43,18 @@
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvPessoal = new System.Windows.Forms.DataGridView();
-            this.btNovo = new System.Windows.Forms.Button();
-            this.btEditar = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.opHoraExtra = new System.Windows.Forms.RadioButton();
+            this.opAfastamento = new System.Windows.Forms.RadioButton();
             this.btnRport = new System.Windows.Forms.Button();
-            this.dgvAfastamentos = new System.Windows.Forms.DataGridView();
+            this.dgvDataPerson = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoal)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAfastamentos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDataPerson)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -71,42 +71,17 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.lbIdade);
             this.panel1.Controls.Add(this.lbCargo);
-            this.panel1.Controls.Add(this.lbTempoDeCasa);
-            this.panel1.Controls.Add(this.lbAdimissao);
             this.panel1.Controls.Add(this.lbApelido);
+            this.panel1.Controls.Add(this.btEditar);
+            this.panel1.Controls.Add(this.btNovo);
             this.panel1.Controls.Add(this.lbNome);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1095, 244);
             this.panel1.TabIndex = 5;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label7.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label7.Location = new System.Drawing.Point(16, 195);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 21);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Idade";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.label4.Location = new System.Drawing.Point(16, 130);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(68, 21);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Desde:";
             // 
             // pictureBox1
             // 
@@ -118,60 +93,49 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // lbIdade
-            // 
-            this.lbIdade.AutoSize = true;
-            this.lbIdade.Font = new System.Drawing.Font("Yu Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbIdade.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lbIdade.Location = new System.Drawing.Point(16, 216);
-            this.lbIdade.Name = "lbIdade";
-            this.lbIdade.Size = new System.Drawing.Size(180, 21);
-            this.lbIdade.TabIndex = 1;
-            this.lbIdade.Text = "x anos, x meses, x dias";
-            // 
             // lbCargo
             // 
             this.lbCargo.AutoSize = true;
             this.lbCargo.Font = new System.Drawing.Font("Yu Gothic Medium", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lbCargo.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lbCargo.Location = new System.Drawing.Point(16, 87);
+            this.lbCargo.Location = new System.Drawing.Point(25, 56);
             this.lbCargo.Name = "lbCargo";
             this.lbCargo.Size = new System.Drawing.Size(59, 21);
             this.lbCargo.TabIndex = 1;
             this.lbCargo.Text = "Cargo";
-            // 
-            // lbTempoDeCasa
-            // 
-            this.lbTempoDeCasa.AutoSize = true;
-            this.lbTempoDeCasa.Font = new System.Drawing.Font("Yu Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbTempoDeCasa.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lbTempoDeCasa.Location = new System.Drawing.Point(233, 151);
-            this.lbTempoDeCasa.Name = "lbTempoDeCasa";
-            this.lbTempoDeCasa.Size = new System.Drawing.Size(121, 21);
-            this.lbTempoDeCasa.TabIndex = 1;
-            this.lbTempoDeCasa.Text = "n anos de casa";
-            // 
-            // lbAdimissao
-            // 
-            this.lbAdimissao.AutoSize = true;
-            this.lbAdimissao.Font = new System.Drawing.Font("Yu Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbAdimissao.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lbAdimissao.Location = new System.Drawing.Point(16, 151);
-            this.lbAdimissao.Name = "lbAdimissao";
-            this.lbAdimissao.Size = new System.Drawing.Size(90, 21);
-            this.lbAdimissao.TabIndex = 1;
-            this.lbAdimissao.Text = "xx/xx/xxxx";
             // 
             // lbApelido
             // 
             this.lbApelido.AutoSize = true;
             this.lbApelido.Font = new System.Drawing.Font("Yu Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lbApelido.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lbApelido.Location = new System.Drawing.Point(16, 51);
+            this.lbApelido.Location = new System.Drawing.Point(25, 77);
             this.lbApelido.Name = "lbApelido";
             this.lbApelido.Size = new System.Drawing.Size(64, 21);
             this.lbApelido.TabIndex = 1;
             this.lbApelido.Text = "Apelido";
+            // 
+            // btEditar
+            // 
+            this.btEditar.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btEditar.Location = new System.Drawing.Point(92, 200);
+            this.btEditar.Name = "btEditar";
+            this.btEditar.Size = new System.Drawing.Size(93, 41);
+            this.btEditar.TabIndex = 2;
+            this.btEditar.Text = "Editar";
+            this.btEditar.UseVisualStyleBackColor = false;
+            this.btEditar.Click += new System.EventHandler(this.btEditar_Click);
+            // 
+            // btNovo
+            // 
+            this.btNovo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btNovo.Location = new System.Drawing.Point(3, 200);
+            this.btNovo.Name = "btNovo";
+            this.btNovo.Size = new System.Drawing.Size(86, 41);
+            this.btNovo.TabIndex = 2;
+            this.btNovo.Text = "Novo";
+            this.btNovo.UseVisualStyleBackColor = false;
+            this.btNovo.Click += new System.EventHandler(this.btNovo_Click);
             // 
             // lbNome
             // 
@@ -235,45 +199,48 @@
             this.dgvPessoal.Size = new System.Drawing.Size(185, 197);
             this.dgvPessoal.TabIndex = 8;
             this.dgvPessoal.SelectionChanged += new System.EventHandler(this.dgvPessoal_SelectionChanged);
-            // 
-            // btNovo
-            // 
-            this.btNovo.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btNovo.Location = new System.Drawing.Point(3, 3);
-            this.btNovo.Name = "btNovo";
-            this.btNovo.Size = new System.Drawing.Size(93, 41);
-            this.btNovo.TabIndex = 2;
-            this.btNovo.Text = "Novo";
-            this.btNovo.UseVisualStyleBackColor = false;
-            this.btNovo.Click += new System.EventHandler(this.btNovo_Click);
-            // 
-            // btEditar
-            // 
-            this.btEditar.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btEditar.Location = new System.Drawing.Point(102, 3);
-            this.btEditar.Name = "btEditar";
-            this.btEditar.Size = new System.Drawing.Size(93, 41);
-            this.btEditar.TabIndex = 2;
-            this.btEditar.Text = "Editar";
-            this.btEditar.UseVisualStyleBackColor = false;
-            this.btEditar.Click += new System.EventHandler(this.btEditar_Click);
+            this.dgvPessoal.MouseCaptureChanged += new System.EventHandler(this.dgvPessoal_MouseCaptureChanged);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
+            this.panel3.Controls.Add(this.opHoraExtra);
+            this.panel3.Controls.Add(this.opAfastamento);
             this.panel3.Controls.Add(this.btnRport);
-            this.panel3.Controls.Add(this.btNovo);
-            this.panel3.Controls.Add(this.btEditar);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(185, 244);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(910, 47);
             this.panel3.TabIndex = 10;
             // 
+            // opHoraExtra
+            // 
+            this.opHoraExtra.AutoSize = true;
+            this.opHoraExtra.Location = new System.Drawing.Point(171, 11);
+            this.opHoraExtra.Name = "opHoraExtra";
+            this.opHoraExtra.Size = new System.Drawing.Size(108, 25);
+            this.opHoraExtra.TabIndex = 4;
+            this.opHoraExtra.TabStop = true;
+            this.opHoraExtra.Text = "Hora Extra";
+            this.opHoraExtra.UseVisualStyleBackColor = true;
+            this.opHoraExtra.CheckedChanged += new System.EventHandler(this.opHoraExtra_CheckedChanged);
+            // 
+            // opAfastamento
+            // 
+            this.opAfastamento.AutoSize = true;
+            this.opAfastamento.Location = new System.Drawing.Point(6, 11);
+            this.opAfastamento.Name = "opAfastamento";
+            this.opAfastamento.Size = new System.Drawing.Size(131, 25);
+            this.opAfastamento.TabIndex = 4;
+            this.opAfastamento.TabStop = true;
+            this.opAfastamento.Text = "Afastamentos";
+            this.opAfastamento.UseVisualStyleBackColor = true;
+            this.opAfastamento.CheckedChanged += new System.EventHandler(this.opAfastamento_CheckedChanged);
+            // 
             // btnRport
             // 
             this.btnRport.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRport.Location = new System.Drawing.Point(201, 3);
+            this.btnRport.Location = new System.Drawing.Point(587, 3);
             this.btnRport.Name = "btnRport";
             this.btnRport.Size = new System.Drawing.Size(93, 41);
             this.btnRport.TabIndex = 3;
@@ -281,25 +248,26 @@
             this.btnRport.UseVisualStyleBackColor = false;
             this.btnRport.Click += new System.EventHandler(this.btReport_Click);
             // 
-            // dgvAfastamentos
+            // dgvDataPerson
             // 
-            this.dgvAfastamentos.AllowUserToAddRows = false;
-            this.dgvAfastamentos.AllowUserToDeleteRows = false;
-            this.dgvAfastamentos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgvAfastamentos.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvAfastamentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAfastamentos.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvAfastamentos.GridColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvAfastamentos.Location = new System.Drawing.Point(185, 291);
-            this.dgvAfastamentos.MultiSelect = false;
-            this.dgvAfastamentos.Name = "dgvAfastamentos";
-            this.dgvAfastamentos.ReadOnly = true;
-            this.dgvAfastamentos.RowHeadersVisible = false;
-            this.dgvAfastamentos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvAfastamentos.RowTemplate.Height = 25;
-            this.dgvAfastamentos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAfastamentos.Size = new System.Drawing.Size(910, 183);
-            this.dgvAfastamentos.TabIndex = 11;
+            this.dgvDataPerson.AllowUserToAddRows = false;
+            this.dgvDataPerson.AllowUserToDeleteRows = false;
+            this.dgvDataPerson.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgvDataPerson.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvDataPerson.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDataPerson.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvDataPerson.GridColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvDataPerson.Location = new System.Drawing.Point(185, 291);
+            this.dgvDataPerson.Name = "dgvDataPerson";
+            this.dgvDataPerson.ReadOnly = true;
+            this.dgvDataPerson.RowHeadersVisible = false;
+            this.dgvDataPerson.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvDataPerson.RowTemplate.Height = 25;
+            this.dgvDataPerson.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvDataPerson.Size = new System.Drawing.Size(910, 183);
+            this.dgvDataPerson.TabIndex = 11;
+            this.dgvDataPerson.MultiSelectChanged += new System.EventHandler(this.dgvDataPerson_MultiSelectChanged);
+            this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
             // 
             // WorkflowByPerson
             // 
@@ -307,7 +275,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1095, 496);
-            this.Controls.Add(this.dgvAfastamentos);
+            this.Controls.Add(this.dgvDataPerson);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.statusStrip1);
@@ -328,25 +296,79 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoal)).EndInit();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAfastamentos)).EndInit();
+            this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDataPerson)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
+        private void dgvPessoal_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            ContextMenuOnPersons();
+        }
+
+        private void dgvDataPerson_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            ContextMenuOnData();
+        }
+
+        private void ContextMenuOnPersons()
+        {
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Editar");
+            item1.Click += (object sender, EventArgs e) => {
+                try
+                {
+                    VigiaCRUD.Load(v.Id);
+
+                    new NewVigia().ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    statusLabel.Text = $"LOAD_VGM: {ex.Message}";
+                }
+            };
+
+            menu.Items.Clear();
+            menu.Items.Add(item1);
+
+            dgvPessoal.ContextMenuStrip = menu;
+        }
+
+        private void ContextMenuOnData()
+        {
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Gerar Ordem de Serviço");
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Enviar para Telefone");
+            ToolStripMenuItem item3 = new ToolStripMenuItem("Imprimir Documento Selecionado");
+
+            item1.Click += (object sender, EventArgs e) => {
+                MessageBox.Show("Hello");
+            };
+
+            item2.Click += (object sender, EventArgs e) => {
+                MessageBox.Show("Hello");
+            };
+
+            item3.Click += (object sender, EventArgs e) => {
+                MessageBox.Show("Hello");
+            };
+
+            menu.Items.Clear();
+            menu.Items.Add(item1);
+            menu.Items.Add(item2);
+            menu.Items.Add(item3);
+
+            dgvDataPerson.ContextMenuStrip = menu;
+        }
+
         #endregion
         private Panel panel1;
-        private Label label7;
-        private Label label4;
-        private Label lbIdade;
         private Label lbCargo;
-        private Label lbAdimissao;
         private Label lbApelido;
         private Label lbNome;
         private PictureBox pictureBox1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ContextMenuStrip contextMenuStrip1;
-        private Label lbTempoDeCasa;
         private TextBox textBox1;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
@@ -356,6 +378,8 @@
         private Button btEditar;
         private Panel panel3;
         private Button btnRport;
-        private DataGridView dgvAfastamentos;
+        private DataGridView dgvDataPerson;
+        private RadioButton opHoraExtra;
+        private RadioButton opAfastamento;
     }
 }

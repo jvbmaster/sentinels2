@@ -1,4 +1,9 @@
-﻿using Sentinels2.Data;
+﻿using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Web;
+using Sentinels2.Data;
 using Sentinels2.Models;
 
 namespace Sentinels2.Rules
@@ -96,6 +101,25 @@ namespace Sentinels2.Rules
                     MessageBox.Show(ex.Message);
                 }
             }
+        }
+
+        public static void SendMsgTo(List<Escala> escalas)
+        {
+            Vigia v = VigiaCRUD.Find(escalas[0].Vigia);
+            string termo = "*Ao confirmar, você se compromete a realizar os plantões aqui listados.*\n*Devendo comunicar o surgimento de qualquer imprevisto que inviabilize sua realização.*\n\nPara aceitar, Responda essa menssagem com a palavra em maiúsculo: *ACEITO*";
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"*{v.Id}*\n\n");
+            escalas.ForEach(e => {
+                sb.Append($"=>\t{e.Data.ToString("dd/MM/yyyy")} ({e.Data.ToString("ddd", new CultureInfo("pt-BR")).ToUpper()}) - {e.Patrimonio}\n\tDas {e.Entrada.ToString("HH:mm")} às {e.Saida.ToString("HH:mm")} Horas - {e.TipoPagamento}\n\n");
+            });
+            sb.Append($"\n\n{termo}");
+
+            string browserURi = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+            string apiurl = "https://api.whatsapp.com/send?phone=55";
+            string telefone = v.Telefone.Replace("-","").Replace(" ", "");
+            var msg = HttpUtility.UrlPathEncode(sb.ToString());
+            string url = $"{apiurl}{telefone}&text={msg}";
+            Process.Start(browserURi, url);
         }
     }
 }

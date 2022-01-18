@@ -33,13 +33,14 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.button5 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvPatrimonios = new System.Windows.Forms.DataGridView();
             this.salvar = new System.Windows.Forms.Button();
             this.cancelar = new System.Windows.Forms.Button();
             this.btAddAll = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.button6 = new System.Windows.Forms.Button();
             this.checkedListBox1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatrimonios)).BeginInit();
@@ -47,7 +48,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(298, 147);
+            this.button1.Location = new System.Drawing.Point(299, 207);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 71);
@@ -58,7 +59,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(299, 226);
+            this.button2.Location = new System.Drawing.Point(300, 286);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(95, 71);
@@ -69,7 +70,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(298, 56);
+            this.button3.Location = new System.Drawing.Point(299, 116);
             this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(95, 83);
@@ -80,7 +81,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(299, 305);
+            this.button4.Location = new System.Drawing.Point(300, 365);
             this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(95, 80);
@@ -97,9 +98,17 @@
             this.checkedListBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.checkedListBox1.Size = new System.Drawing.Size(290, 395);
+            this.checkedListBox1.Size = new System.Drawing.Size(290, 571);
             this.checkedListBox1.TabIndex = 6;
             this.checkedListBox1.TabStop = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(4, 26);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(282, 541);
+            this.panel1.TabIndex = 0;
             // 
             // button5
             // 
@@ -117,11 +126,11 @@
             this.groupBox1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.groupBox1.Controls.Add(this.dgvPatrimonios);
             this.groupBox1.Controls.Add(this.button5);
-            this.groupBox1.Location = new System.Drawing.Point(402, 50);
+            this.groupBox1.Location = new System.Drawing.Point(402, 27);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(442, 342);
+            this.groupBox1.Size = new System.Drawing.Size(442, 541);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Patrimônio";
@@ -138,7 +147,7 @@
             this.dgvPatrimonios.ReadOnly = true;
             this.dgvPatrimonios.RowTemplate.Height = 25;
             this.dgvPatrimonios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPatrimonios.Size = new System.Drawing.Size(424, 256);
+            this.dgvPatrimonios.Size = new System.Drawing.Size(424, 455);
             this.dgvPatrimonios.TabIndex = 8;
             // 
             // salvar
@@ -171,40 +180,45 @@
             this.btAddAll.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.btAddAll.FlatAppearance.BorderSize = 0;
             this.btAddAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btAddAll.Location = new System.Drawing.Point(503, 5);
+            this.btAddAll.Location = new System.Drawing.Point(299, 27);
             this.btAddAll.Margin = new System.Windows.Forms.Padding(4);
             this.btAddAll.Name = "btAddAll";
-            this.btAddAll.Size = new System.Drawing.Size(198, 41);
+            this.btAddAll.Size = new System.Drawing.Size(95, 81);
             this.btAddAll.TabIndex = 7;
-            this.btAddAll.Text = "Nova Escala Completa";
+            this.btAddAll.Text = "Adicionar Escala Fixa Completa";
             this.btAddAll.UseVisualStyleBackColor = false;
             this.btAddAll.Click += new System.EventHandler(this.btAddAll_Click_1);
             // 
-            // panel1
+            // button6
             // 
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(4, 26);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(282, 365);
-            this.panel1.TabIndex = 0;
+            this.button6.Location = new System.Drawing.Point(300, 453);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(95, 108);
+            this.button6.TabIndex = 4;
+            this.button6.Text = "Apenas Finais de Semana e Feriados";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
             // 
             // EscalaScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(969, 397);
+            this.ClientSize = new System.Drawing.Size(969, 573);
+            this.ControlBox = false;
             this.Controls.Add(this.cancelar);
             this.Controls.Add(this.btAddAll);
             this.Controls.Add(this.salvar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkedListBox1);
+            this.Controls.Add(this.button6);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EscalaScreen";
             this.Padding = new System.Windows.Forms.Padding(1);
@@ -231,5 +245,6 @@
         private DataGridView dgvPatrimonios;
         private Button btAddAll;
         private Panel panel1;
+        private Button button6;
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using Sentinels2.Data;
-using Sentinels2.Models;
 using Sentinels2.Rules;
 
 namespace Sentinels2.Views
@@ -55,24 +54,43 @@ namespace Sentinels2.Views
             try
             {
                 string vgm = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                string referencia = "";
 
-                int verificaAbono = AfastamentoCRUD.Get(p => p.Funcionario.Equals(vgm) && p.TipoAfastamento.Equals(tipoAfastamento) && p.DataInicial.Year.Equals(DateTime.Now.Year)).Count();
-                
-                if(verificaAbono > 5)
+                int verificaAbono = 0;
+                if (tipoAfastamento == "Abono")
                 {
-                    MessageBox.Show("Funcionário não tem direiro a abonar novas faltas!");
-                    return;
+                    verificaAbono = AfastamentoCRUD.Get(p => p.Funcionario.Equals(vgm) && p.TipoAfastamento.Equals(tipoAfastamento) && p.DataInicial.Year.Equals(DateTime.Now.Year)).Count();
+                    
+                    if(verificaAbono > 5)
+                    {
+                        MessageBox.Show("Funcionário não tem direiro a abonar novas faltas!");
+                        return;
+                    }
+                    referencia = $"{DateTime.Now.Year}/{verificaAbono + 1}";
                 }
-
-                string referencia = $"{DateTime.Now.Year}/{verificaAbono + 1}";
 
                 AfastamentoCRUD.ObjectInstanceate.Funcionario = vgm;
                 AfastamentoCRUD.ObjectInstanceate.Referencia = (tipoAfastamento == "Abono") ? referencia : fRef.Text;
                 AfastamentoCRUD.ObjectInstanceate.TipoAfastamento = tipoAfastamento;
-                //AfastamentoCRUD.ObjectInstanceate.QuantidadeDias = DateCheck.Dates.Count;
-                //AfastamentoCRUD.ObjectInstanceate.DataInicial = DateCheck.Dates[0].Date;
-                //AfastamentoCRUD.ObjectInstanceate.DataFinal = DateCheck.Dates[DateCheck.Dates.Count-1].Date;
                 AfastamentoCRUD.Insert(AfastamentoCRUD.ObjectInstanceate);
+
+                // Selecionando último afastamento registrado
+                AfastamentoCRUD.ObjectInstanceate = AfastamentoCRUD.GetAll().OrderBy(x => x.Id).Last();
+
+                //MessageBox.Show($"Afastamento ID: {AfastamentoCRUD.ObjectInstanceate.Id} de {AfastamentoCRUD.ObjectInstanceate.Funcionario}");
+
+                // Adicionando Id de Afastamento nas datas onde o VGM está escalado
+                var buscaescala = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) &&
+                                 (p.Data >= AfastamentoCRUD.ObjectInstanceate.DataInicial &&
+                                 p.Data <= AfastamentoCRUD.ObjectInstanceate.DataFinal)).ToList();
+
+                foreach (var item in buscaescala)
+                {
+                    item.AfastamentoVGF = AfastamentoCRUD.ObjectInstanceate.Id;
+                    EscalaCRUD.Update(item);
+                }
+
+                // Gerar Documento
                 if(MessageBox.Show($"{tipoAfastamento} registrado com sucesso! Deseja imprimir agora?", "Çool", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Relatorios report = new Relatorios();
@@ -81,11 +99,18 @@ namespace Sentinels2.Views
                     {
                         case "Abono": report.GerarAbonada(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Férias": report.GerarFerias(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Licença Prêmio": report.GerarLicencaPremio(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Licença Saúde": report.GerarLicencaMedica(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Casamento": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Doação de Sanguê": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Paternidade": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Luto": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "TRE": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Outros": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                     }
                 }
 
-
-
+                DialogResult = DialogResult.Yes;
                 Close();
             }
             catch (Exception ex)
@@ -94,11 +119,5 @@ namespace Sentinels2.Views
             }
         }
 
-        private void GerarAquivoParaImpressao()
-        {
-            
-        }
-
-        
     }
 }

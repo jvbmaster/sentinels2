@@ -28,33 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkflowByDate));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.calendar = new System.Windows.Forms.MonthCalendar();
             this.label1 = new System.Windows.Forms.Label();
             this.lbCurrentDate = new System.Windows.Forms.Label();
             this.dgvPessoalDisponivel = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.configuraçõesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zerarOrdensDeServiçoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbTotalDays = new System.Windows.Forms.GroupBox();
+            this.opNoturno = new System.Windows.Forms.RadioButton();
+            this.opTodos = new System.Windows.Forms.RadioButton();
+            this.opDiurno = new System.Windows.Forms.RadioButton();
             this.dgvEscala = new System.Windows.Forms.DataGridView();
+            this.plVgm = new System.Windows.Forms.GroupBox();
+            this.dgvPlVgm = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.lbTotalDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEscala)).BeginInit();
+            this.plVgm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).BeginInit();
             this.SuspendLayout();
             // 
             // calendar
             // 
             this.calendar.BackColor = System.Drawing.Color.Black;
             this.calendar.CalendarDimensions = new System.Drawing.Size(1, 3);
-            this.calendar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.calendar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.calendar.ForeColor = System.Drawing.Color.Silver;
-            this.calendar.Location = new System.Drawing.Point(3, 25);
+            this.calendar.Location = new System.Drawing.Point(10, 85);
             this.calendar.Margin = new System.Windows.Forms.Padding(12, 10, 12, 10);
             this.calendar.MaxSelectionCount = 365;
             this.calendar.Name = "calendar";
@@ -87,15 +89,15 @@
             // 
             this.dgvPessoalDisponivel.AllowUserToAddRows = false;
             this.dgvPessoalDisponivel.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dgvPessoalDisponivel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.dgvPessoalDisponivel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvPessoalDisponivel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPessoalDisponivel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvPessoalDisponivel.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.dgvPessoalDisponivel.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvPessoalDisponivel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvPessoalDisponivel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPessoalDisponivel.Location = new System.Drawing.Point(913, 92);
+            this.dgvPessoalDisponivel.Location = new System.Drawing.Point(957, 92);
             this.dgvPessoalDisponivel.MultiSelect = false;
             this.dgvPessoalDisponivel.Name = "dgvPessoalDisponivel";
             this.dgvPessoalDisponivel.ReadOnly = true;
@@ -103,18 +105,18 @@
             this.dgvPessoalDisponivel.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvPessoalDisponivel.RowTemplate.Height = 25;
             this.dgvPessoalDisponivel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPessoalDisponivel.Size = new System.Drawing.Size(322, 424);
+            this.dgvPessoalDisponivel.Size = new System.Drawing.Size(322, 247);
             this.dgvPessoalDisponivel.TabIndex = 5;
+            this.dgvPessoalDisponivel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPessoalDisponivel_MouseClick);
             this.dgvPessoalDisponivel.MouseCaptureChanged += new System.EventHandler(this.dgvPessoalDisponivel_MouseCaptureChanged);
             // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel,
-            this.toolStripDropDownButton1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 557);
+            this.statusLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 663);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1247, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1291, 22);
             this.statusStrip1.TabIndex = 6;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -123,41 +125,54 @@
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(0, 17);
             // 
-            // toolStripDropDownButton1
-            // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configuraçõesToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 20);
-            this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
-            // 
-            // configuraçõesToolStripMenuItem
-            // 
-            this.configuraçõesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zerarOrdensDeServiçoToolStripMenuItem});
-            this.configuraçõesToolStripMenuItem.Name = "configuraçõesToolStripMenuItem";
-            this.configuraçõesToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.configuraçõesToolStripMenuItem.Text = "Configurações";
-            // 
-            // zerarOrdensDeServiçoToolStripMenuItem
-            // 
-            this.zerarOrdensDeServiçoToolStripMenuItem.Name = "zerarOrdensDeServiçoToolStripMenuItem";
-            this.zerarOrdensDeServiçoToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.zerarOrdensDeServiçoToolStripMenuItem.Text = "Zerar Ordens de Serviço";
-            this.zerarOrdensDeServiçoToolStripMenuItem.Click += new System.EventHandler(this.zerarOrdensDeServiçoToolStripMenuItem_Click);
-            // 
             // lbTotalDays
             // 
+            this.lbTotalDays.Controls.Add(this.opNoturno);
+            this.lbTotalDays.Controls.Add(this.opTodos);
+            this.lbTotalDays.Controls.Add(this.opDiurno);
             this.lbTotalDays.Controls.Add(this.calendar);
             this.lbTotalDays.Dock = System.Windows.Forms.DockStyle.Left;
             this.lbTotalDays.Location = new System.Drawing.Point(0, 0);
             this.lbTotalDays.Name = "lbTotalDays";
-            this.lbTotalDays.Size = new System.Drawing.Size(252, 557);
+            this.lbTotalDays.Size = new System.Drawing.Size(252, 663);
             this.lbTotalDays.TabIndex = 7;
             this.lbTotalDays.TabStop = false;
+            // 
+            // opNoturno
+            // 
+            this.opNoturno.AutoSize = true;
+            this.opNoturno.Location = new System.Drawing.Point(148, 54);
+            this.opNoturno.Name = "opNoturno";
+            this.opNoturno.Size = new System.Drawing.Size(87, 25);
+            this.opNoturno.TabIndex = 3;
+            this.opNoturno.TabStop = true;
+            this.opNoturno.Text = "Noturno";
+            this.opNoturno.UseVisualStyleBackColor = true;
+            this.opNoturno.CheckedChanged += new System.EventHandler(this.opNoturno_CheckedChanged);
+            // 
+            // opTodos
+            // 
+            this.opTodos.AutoSize = true;
+            this.opTodos.Location = new System.Drawing.Point(10, 27);
+            this.opTodos.Name = "opTodos";
+            this.opTodos.Size = new System.Drawing.Size(68, 25);
+            this.opTodos.TabIndex = 3;
+            this.opTodos.TabStop = true;
+            this.opTodos.Text = "Todos";
+            this.opTodos.UseVisualStyleBackColor = true;
+            this.opTodos.CheckedChanged += new System.EventHandler(this.opTodos_CheckedChanged);
+            // 
+            // opDiurno
+            // 
+            this.opDiurno.AutoSize = true;
+            this.opDiurno.Location = new System.Drawing.Point(148, 25);
+            this.opDiurno.Name = "opDiurno";
+            this.opDiurno.Size = new System.Drawing.Size(76, 25);
+            this.opDiurno.TabIndex = 3;
+            this.opDiurno.TabStop = true;
+            this.opDiurno.Text = "Diúrno";
+            this.opDiurno.UseVisualStyleBackColor = true;
+            this.opDiurno.CheckedChanged += new System.EventHandler(this.opDiurno_CheckedChanged);
             // 
             // dgvEscala
             // 
@@ -178,15 +193,47 @@
             this.dgvEscala.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvEscala.RowTemplate.Height = 25;
             this.dgvEscala.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEscala.Size = new System.Drawing.Size(649, 424);
+            this.dgvEscala.Size = new System.Drawing.Size(693, 437);
             this.dgvEscala.TabIndex = 8;
+            // 
+            // plVgm
+            // 
+            this.plVgm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.plVgm.Controls.Add(this.dgvPlVgm);
+            this.plVgm.Location = new System.Drawing.Point(957, 335);
+            this.plVgm.Name = "plVgm";
+            this.plVgm.Size = new System.Drawing.Size(322, 194);
+            this.plVgm.TabIndex = 11;
+            this.plVgm.TabStop = false;
+            // 
+            // dgvPlVgm
+            // 
+            this.dgvPlVgm.AllowUserToAddRows = false;
+            this.dgvPlVgm.AllowUserToDeleteRows = false;
+            this.dgvPlVgm.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvPlVgm.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dgvPlVgm.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvPlVgm.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPlVgm.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPlVgm.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPlVgm.Location = new System.Drawing.Point(3, 25);
+            this.dgvPlVgm.MultiSelect = false;
+            this.dgvPlVgm.Name = "dgvPlVgm";
+            this.dgvPlVgm.ReadOnly = true;
+            this.dgvPlVgm.RowHeadersVisible = false;
+            this.dgvPlVgm.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvPlVgm.RowTemplate.Height = 25;
+            this.dgvPlVgm.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPlVgm.Size = new System.Drawing.Size(316, 166);
+            this.dgvPlVgm.TabIndex = 3;
             // 
             // WorkflowByDate
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1247, 579);
+            this.ClientSize = new System.Drawing.Size(1291, 685);
+            this.Controls.Add(this.plVgm);
             this.Controls.Add(this.dgvEscala);
             this.Controls.Add(this.lbTotalDays);
             this.Controls.Add(this.statusStrip1);
@@ -203,7 +250,10 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.lbTotalDays.ResumeLayout(false);
+            this.lbTotalDays.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEscala)).EndInit();
+            this.plVgm.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,8 +276,8 @@
             menu.Items.Clear();
             menu.Items.Add(item1);
             menu.Items.Add(item5);
-            menu.Items.Add(item2);
-            menu.Items.Add(item3);
+            //menu.Items.Add(item2); // feriado
+            //menu.Items.Add(item3); // lembrete
             menu.Items.Add(item4);
 
             calendar.ContextMenuStrip = menu;
@@ -271,10 +321,12 @@
         private DataGridView dgvPessoalDisponivel;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
-        private ToolStripDropDownButton toolStripDropDownButton1;
-        private ToolStripMenuItem configuraçõesToolStripMenuItem;
-        private ToolStripMenuItem zerarOrdensDeServiçoToolStripMenuItem;
         private GroupBox lbTotalDays;
         private DataGridView dgvEscala;
+        private GroupBox plVgm;
+        private DataGridView dgvPlVgm;
+        private RadioButton opNoturno;
+        private RadioButton opTodos;
+        private RadioButton opDiurno;
     }
 }

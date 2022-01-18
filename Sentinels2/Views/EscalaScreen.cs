@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
 using Sentinels2.Data;
 using Sentinels2.Models;
 using Sentinels2.Rules;
@@ -160,6 +159,11 @@ namespace Sentinels2.Views
         private void btAddAll_Click_1(object sender, EventArgs e)
         {
             new GeradorDeEscala().Execute();
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

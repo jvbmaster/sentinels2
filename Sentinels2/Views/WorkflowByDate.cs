@@ -1,15 +1,18 @@
 ﻿using System.Data;
+using System.Diagnostics;
+using System.Globalization;
 using Sentinels2.Data;
 using Sentinels2.Models;
 using Sentinels2.Rules;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace Sentinels2.Views
 {
     public partial class WorkflowByDate : Form
     {
         private int totalDays = 0;
+        private int periodos = 0;
+        private DateTime dataInicial, dataFinal;
+        private Afastamento afastamento;
         public WorkflowByDate()
         {
             InitializeComponent();
@@ -18,7 +21,14 @@ namespace Sentinels2.Views
         private void WorkflowByDate_Load(object sender, EventArgs e)
         {
            calendar.SelectionStart = DateTime.Now;
+            opTodos.Checked = true;
            LoadDataFromDate();
+
+           int m = DateTime.Now.Month;
+
+           dataInicial = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{16}");
+           dataFinal = dataInicial.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - 1).Date;
+
         }
 
         private void LoadDataFromDate()
@@ -29,16 +39,41 @@ namespace Sentinels2.Views
                      ? EscalaCRUD.Get(p => p.Data >= calendar.SelectionStart && p.Data <= calendar.SelectionEnd)
                      : EscalaCRUD.Get(p => p.Data.Equals(calendar.SelectionStart));
                 
-                dgvEscala.DataSource = data.Select(p => new {
+                var dataf = data;
+                
+                switch (periodos)
+                {
+                    case 0: dataf = data; break;
+                    case 1: dataf = data.Where(x => x.Saida.Hour > x.Entrada.Hour); break;
+                    case 2: dataf = data.Where(x => x.Saida.Hour < x.Entrada.Hour); break;
+                }
+
+                dgvEscala.DataSource = dataf.Select(p => new {
                         p.OS,
-                        Data = p.Data.ToString("dd/MM/yyyy"),
                         Local = p.Patrimonio,
+                        Data = p.Data.ToString("dd/MM/yyyy"),
+                        Dia = p.Data.ToString("ddd", new CultureInfo("pt_BR")).ToUpper(),
                         Entrada = p.Entrada.ToString("HH:mm"),
                         Saída = p.Saida.ToString("HH:mm"),
                         Guarnição = p.Vigia,
                         Contabilização = p.TipoPagamento,
-                        Duração = p.Duracao
-                    }).ToList();;
+                        Duração = p.Duracao,
+                        Substituição = p.AfastamentoVGF
+                    }).OrderBy(p => p.Local).ToList();
+
+                int afastamentoId = 0;
+                string vgmescalado = "";
+                foreach (DataGridViewRow row in dgvEscala.Rows)
+                {
+                    afastamentoId = Convert.ToInt32(row.Cells[9].Value);
+                    if (afastamentoId > 0)
+                    {
+                        afastamento = AfastamentoCRUD.Find(afastamentoId);
+                        vgmescalado = row.Cells[6].Value.ToString();
+                        row.DefaultCellStyle.BackColor = (vgmescalado == afastamento.Funcionario) ? Color.Red : Color.LightGreen;
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -49,15 +84,39 @@ namespace Sentinels2.Views
         {
             try
             {
-                dgvPessoalDisponivel.DataSource = (totalDays > 1) ? null : PersonWorkflow.AvailableOnDate(calendar.SelectionStart)
-                    .Select(p => new {
-                        Disponíveis = p.Id
-                    }).ToList();
+                // Apenas Vigias Disponíveis
+                List<Vigia> vigias = PersonWorkflow.AvailableOnDate(calendar.SelectionStart);
+                // Apenas Escalas pagas como EXTRA no período especificado
+                List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal) ).ToList();
+
+                var data = from v in vigias
+                           let t = escalas.Where(x => x.Vigia.Equals(v.Id)).Count()
+                           let d = escalas.Where(x => x.Vigia.Equals(v.Id)).Sum(x => x.Duracao)
+                          // let aux_u = escalas.Where(x => x.Vigia.Equals(v.Id)).Last()
+                           select new {
+                               Disponivéis = v.Id,
+                               Plantões = t,
+                               Horas = d,
+                               //Ultimo_Realizado = aux_u.Data
+                           };
+
+                dgvPessoalDisponivel.DataSource = data.ToList();
             }
             catch (Exception ex)
             {
-                statusLabel.Text += $"dispo: {ex.Message}";
+                statusLabel.Text = $"DISPO: {ex.Message}";
             }
+           // try
+           // {
+           //     dgvPessoalDisponivel.DataSource = (totalDays > 1) ? null : PersonWorkflow.AvailableOnDate(calendar.SelectionStart)
+           //         .Select(p => new {
+           //             Disponíveis = p.Id
+           //         }).ToList();
+           // }
+           // catch (Exception ex)
+           // {
+           //     statusLabel.Text += $"dispo: {ex.Message}";
+           // }
         }
         private void AdicionarPlantao(object sender, EventArgs e)
         {
@@ -92,10 +151,17 @@ namespace Sentinels2.Views
 
         private void AdicionarAfastamento(object sender, EventArgs e)
         {
-            AfastamentoCRUD.ObjectInstanceate.DataInicial = calendar.SelectionStart;
+            AfastamentoCRUD.ObjectInstanceate = new Afastamento();
+            AfastamentoCRUD.ObjectInstanceate.DataInicial = calendar.SelectionStart.Date;
             AfastamentoCRUD.ObjectInstanceate.QuantidadeDias = totalDays;
-            AfastamentoCRUD.ObjectInstanceate.DataFinal = (totalDays > 1) ? calendar.SelectionEnd : calendar.SelectionStart;
-            new SetVigia().ShowDialog();
+            AfastamentoCRUD.ObjectInstanceate.DataFinal = (totalDays > 1) ? calendar.SelectionEnd.Date : calendar.SelectionStart.Date;
+            
+            if(new SetVigia().ShowDialog() == DialogResult.Yes)
+            {
+                ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
+                process.Arguments = $"{Relatorios.filenametosave}.docx";
+                Process.Start(process);
+            }
         }
 
         private void AdicionarLembrete(object sender, EventArgs e)
@@ -136,7 +202,6 @@ namespace Sentinels2.Views
             }
             catch (Exception ex)
             {
-
                 statusLabel.Text += $"escalar: {ex.Message}";
             }
         }
@@ -157,7 +222,24 @@ namespace Sentinels2.Views
                 statusLabel.Text += $"escalar: {ex.Message}";
             }
         }
-
+        private void LoadPlantoesPorVGM()
+        {
+            try
+            {
+                string vgm = dgvPessoalDisponivel.CurrentRow.Cells[0].Value.ToString();
+                dgvPlVgm.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) && p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal))
+                    .Select(p => new {
+                        p.Data,
+                        p.Patrimonio
+                    })
+                    .ToList();
+                plVgm.Text = $"Plantões de {vgm}";
+            }
+            catch (Exception ex)
+            {
+                statusLabel.Text = $"PL_VGM: {ex.Message}";
+            }
+        }
         /// <Eventos>
         /// 
         /// </summary>
@@ -179,20 +261,32 @@ namespace Sentinels2.Views
             VerificarDisponibilidade();
         }
 
+        private void dgvPessoalDisponivel_MouseClick(object sender, MouseEventArgs e)
+        {
+            LoadPlantoesPorVGM();
+        }
+
+        private void opTodos_CheckedChanged(object sender, EventArgs e)
+        {
+            periodos = 0;
+            LoadDataFromDate();
+        }
+
+        private void opDiurno_CheckedChanged(object sender, EventArgs e)
+        {
+            periodos = 1;
+            LoadDataFromDate();
+        }
+
+        private void opNoturno_CheckedChanged(object sender, EventArgs e)
+        {
+            periodos = 2;
+            LoadDataFromDate();
+        }
+
         private void zerarOrdensDeServiçoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                using (Context context = new Context())
-                {
-                    var data = context.Escalas.FromSqlRaw("UPDATE SQLITE_SEQUENCE SET SEQ=0 WHERE NAME='Escala'").ToList();
-                }
-                MessageBox.Show("Cool");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            
         }
     }
 }

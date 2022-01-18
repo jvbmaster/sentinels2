@@ -44,6 +44,7 @@ namespace Sentinels2.Views
             }
             panelContent.Controls.Clear();
             w = new WorkflowByPerson();
+            w = new WorkflowByPerson();
             w.TopLevel = false;
             w.AutoScroll = true;
             w.FormBorderStyle = FormBorderStyle.None;
@@ -56,17 +57,7 @@ namespace Sentinels2.Views
 
         private void BoasVindas_Load(object sender, EventArgs e)
         {
-            if(DateTime.Now.Hour > 18)
-            {
-                groupBox1.Text = "Boa noite";
-            }else if(DateTime.Now.Hour > 5 && DateTime.Now.Hour < 12)
-            {
-                groupBox1.Text = "Bom dia!";
-            }
-            else
-            {
-                groupBox1.Text = "Boa Tarde!";
-            }
+           
         }
 
         private void testesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,17 +84,32 @@ namespace Sentinels2.Views
             }
             panelContent.Controls.Clear();
 
-            //w = new WorkflowByPerson();
-            //w.TopLevel = false;
-            //w.AutoScroll = true;
-            //w.FormBorderStyle = FormBorderStyle.None;
-            //w.WindowState = FormWindowState.Maximized;
-            //w.Parent = panelContent;
-            //
-            //panelContent.Controls.Add(w);
-            //w.Show();
+            w = new WorkFlowByPlaces();
+            w.TopLevel = false;
+            w.AutoScroll = true;
+            w.FormBorderStyle = FormBorderStyle.None;
+            w.WindowState = FormWindowState.Maximized;
+            w.Parent = panelContent;
+            
+            panelContent.Controls.Add(w);
+            w.Show();
+        }
 
-            MessageBox.Show("Em breve!");
+        private void preferênciasToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            new UserPreferences().ShowDialog();
+        }
+
+        private void gerenteDeDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("Tools\\SQLiteDatabaseBrowserPortable.exe", GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").DatabasePath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível executar a aplicaçãao externa\nERRO: {ex.Message}");
+            }
         }
     }
 }

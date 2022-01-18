@@ -13,6 +13,7 @@ namespace Sentinels2.Data
         public DbSet<EscalaAnexo> EscalaAnexos { get; set; }
         public DbSet<Feriado> Feriados { get; set; }
         public DbSet<LicencaPremio> LicencasPremio { get; set; }
+        public DbSet<OficioExpedido> OficiosExpedidos { get; set; }
         public DbSet<OpcaoDeFerias> OpcoesDeFerias { get; set; }
         public DbSet<PassaAgulha> PassaAgulhas { get; set; }
         public DbSet<Patrimonio> Patrimonios { get; set; }
@@ -23,8 +24,8 @@ namespace Sentinels2.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
         {
-
-            options.UseSqlite(connectionString: $"Filename=vgmcatanduva2.db",
+            string uri = GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").DatabasePath;
+            options.UseSqlite(connectionString: $"filename={uri}",
                 sqliteOptionsAction: op => {
                     op.MigrationsAssembly(
                         Assembly.GetExecutingAssembly().FullName    
@@ -61,6 +62,10 @@ namespace Sentinels2.Data
 
             modelBuilder.Entity<LicencaPremio>().ToTable("LicencaPremio");
             modelBuilder.Entity<LicencaPremio>().HasKey(e => e.Certidao);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<OficioExpedido>().ToTable("OficioExpedido");
+            modelBuilder.Entity<OficioExpedido>().HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<OpcaoDeFerias>().ToTable("OpcaoDeFerias");

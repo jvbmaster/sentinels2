@@ -31,6 +31,8 @@ namespace Sentinels2
             this.components = new System.ComponentModel.Container();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSendMsg = new System.Windows.Forms.Button();
+            this.btFrequencia = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lbCargo = new System.Windows.Forms.Label();
             this.lbApelido = new System.Windows.Forms.Label();
@@ -44,8 +46,14 @@ namespace Sentinels2
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvPessoal = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fDataInicial = new System.Windows.Forms.DateTimePicker();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.fDataFinal = new System.Windows.Forms.DateTimePicker();
+            this.opDiasTrabalhados = new System.Windows.Forms.RadioButton();
             this.opHoraExtra = new System.Windows.Forms.RadioButton();
             this.opAfastamento = new System.Windows.Forms.RadioButton();
+            this.btSend = new System.Windows.Forms.Button();
             this.btnRport = new System.Windows.Forms.Button();
             this.dgvDataPerson = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
@@ -54,6 +62,8 @@ namespace Sentinels2
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoal)).BeginInit();
             this.panel3.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDataPerson)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,6 +81,8 @@ namespace Sentinels2
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btnSendMsg);
+            this.panel1.Controls.Add(this.btFrequencia);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.lbCargo);
             this.panel1.Controls.Add(this.lbApelido);
@@ -82,6 +94,26 @@ namespace Sentinels2
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1095, 244);
             this.panel1.TabIndex = 5;
+            // 
+            // btnSendMsg
+            // 
+            this.btnSendMsg.Location = new System.Drawing.Point(299, 200);
+            this.btnSendMsg.Name = "btnSendMsg";
+            this.btnSendMsg.Size = new System.Drawing.Size(142, 41);
+            this.btnSendMsg.TabIndex = 3;
+            this.btnSendMsg.Text = "Avisar Plantões";
+            this.btnSendMsg.UseVisualStyleBackColor = true;
+            this.btnSendMsg.Click += new System.EventHandler(this.btnSendMsg_Click);
+            // 
+            // btFrequencia
+            // 
+            this.btFrequencia.Location = new System.Drawing.Point(191, 200);
+            this.btFrequencia.Name = "btFrequencia";
+            this.btFrequencia.Size = new System.Drawing.Size(102, 41);
+            this.btFrequencia.TabIndex = 3;
+            this.btFrequencia.Text = "Frequência";
+            this.btFrequencia.UseVisualStyleBackColor = true;
+            this.btFrequencia.Click += new System.EventHandler(this.btFrequencia_Click);
             // 
             // pictureBox1
             // 
@@ -204,19 +236,73 @@ namespace Sentinels2
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
+            this.panel3.Controls.Add(this.groupBox1);
+            this.panel3.Controls.Add(this.groupBox2);
+            this.panel3.Controls.Add(this.opDiasTrabalhados);
             this.panel3.Controls.Add(this.opHoraExtra);
             this.panel3.Controls.Add(this.opAfastamento);
+            this.panel3.Controls.Add(this.btSend);
             this.panel3.Controls.Add(this.btnRport);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(185, 244);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(910, 47);
+            this.panel3.Size = new System.Drawing.Size(910, 91);
             this.panel3.TabIndex = 10;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.fDataInicial);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(134, 70);
+            this.groupBox1.TabIndex = 6;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Data Ínicial";
+            // 
+            // fDataInicial
+            // 
+            this.fDataInicial.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataInicial.Location = new System.Drawing.Point(3, 29);
+            this.fDataInicial.Name = "fDataInicial";
+            this.fDataInicial.Size = new System.Drawing.Size(128, 33);
+            this.fDataInicial.TabIndex = 5;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.fDataFinal);
+            this.groupBox2.Location = new System.Drawing.Point(146, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(134, 70);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Data Final";
+            // 
+            // fDataFinal
+            // 
+            this.fDataFinal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataFinal.Location = new System.Drawing.Point(3, 29);
+            this.fDataFinal.Name = "fDataFinal";
+            this.fDataFinal.Size = new System.Drawing.Size(128, 33);
+            this.fDataFinal.TabIndex = 5;
+            // 
+            // opDiasTrabalhados
+            // 
+            this.opDiasTrabalhados.AutoSize = true;
+            this.opDiasTrabalhados.Location = new System.Drawing.Point(644, 6);
+            this.opDiasTrabalhados.Name = "opDiasTrabalhados";
+            this.opDiasTrabalhados.Size = new System.Drawing.Size(155, 25);
+            this.opDiasTrabalhados.TabIndex = 4;
+            this.opDiasTrabalhados.TabStop = true;
+            this.opDiasTrabalhados.Text = "Dias Trabalhados";
+            this.opDiasTrabalhados.UseVisualStyleBackColor = true;
+            this.opDiasTrabalhados.CheckedChanged += new System.EventHandler(this.opDiasTrabalhados_CheckedChanged);
             // 
             // opHoraExtra
             // 
             this.opHoraExtra.AutoSize = true;
-            this.opHoraExtra.Location = new System.Drawing.Point(171, 11);
+            this.opHoraExtra.Location = new System.Drawing.Point(485, 6);
             this.opHoraExtra.Name = "opHoraExtra";
             this.opHoraExtra.Size = new System.Drawing.Size(108, 25);
             this.opHoraExtra.TabIndex = 4;
@@ -228,7 +314,7 @@ namespace Sentinels2
             // opAfastamento
             // 
             this.opAfastamento.AutoSize = true;
-            this.opAfastamento.Location = new System.Drawing.Point(6, 11);
+            this.opAfastamento.Location = new System.Drawing.Point(300, 6);
             this.opAfastamento.Name = "opAfastamento";
             this.opAfastamento.Size = new System.Drawing.Size(131, 25);
             this.opAfastamento.TabIndex = 4;
@@ -237,10 +323,21 @@ namespace Sentinels2
             this.opAfastamento.UseVisualStyleBackColor = true;
             this.opAfastamento.CheckedChanged += new System.EventHandler(this.opAfastamento_CheckedChanged);
             // 
+            // btSend
+            // 
+            this.btSend.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btSend.Location = new System.Drawing.Point(805, 46);
+            this.btSend.Name = "btSend";
+            this.btSend.Size = new System.Drawing.Size(93, 41);
+            this.btSend.TabIndex = 3;
+            this.btSend.Text = "Enviar";
+            this.btSend.UseVisualStyleBackColor = false;
+            this.btSend.Click += new System.EventHandler(this.btSend_Click);
+            // 
             // btnRport
             // 
             this.btnRport.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnRport.Location = new System.Drawing.Point(587, 3);
+            this.btnRport.Location = new System.Drawing.Point(805, 3);
             this.btnRport.Name = "btnRport";
             this.btnRport.Size = new System.Drawing.Size(93, 41);
             this.btnRport.TabIndex = 3;
@@ -257,22 +354,23 @@ namespace Sentinels2
             this.dgvDataPerson.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvDataPerson.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDataPerson.GridColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvDataPerson.Location = new System.Drawing.Point(185, 291);
+            this.dgvDataPerson.Location = new System.Drawing.Point(185, 335);
+            this.dgvDataPerson.MultiSelect = false;
             this.dgvDataPerson.Name = "dgvDataPerson";
             this.dgvDataPerson.ReadOnly = true;
             this.dgvDataPerson.RowHeadersVisible = false;
             this.dgvDataPerson.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvDataPerson.RowTemplate.Height = 25;
             this.dgvDataPerson.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDataPerson.Size = new System.Drawing.Size(910, 183);
+            this.dgvDataPerson.Size = new System.Drawing.Size(910, 139);
             this.dgvDataPerson.TabIndex = 11;
             this.dgvDataPerson.MultiSelectChanged += new System.EventHandler(this.dgvDataPerson_MultiSelectChanged);
             this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
             // 
             // WorkflowByPerson
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1095, 496);
             this.Controls.Add(this.dgvDataPerson);
@@ -297,6 +395,8 @@ namespace Sentinels2
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoal)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvDataPerson)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -319,7 +419,7 @@ namespace Sentinels2
             item1.Click += (object sender, EventArgs e) => {
                 try
                 {
-                    VigiaCRUD.Load(v.Id);
+                    VigiaCRUD.Load(vigia.Id);
 
                     new NewVigia().ShowDialog();
                 }
@@ -381,5 +481,13 @@ namespace Sentinels2
         private DataGridView dgvDataPerson;
         private RadioButton opHoraExtra;
         private RadioButton opAfastamento;
+        private GroupBox groupBox1;
+        private DateTimePicker fDataInicial;
+        private GroupBox groupBox2;
+        private DateTimePicker fDataFinal;
+        private RadioButton opDiasTrabalhados;
+        private Button btFrequencia;
+        private Button btnSendMsg;
+        private Button btSend;
     }
 }

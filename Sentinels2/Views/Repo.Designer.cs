@@ -50,7 +50,7 @@
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(266, 342);
+            this.dataGridView1.Size = new System.Drawing.Size(167, 65);
             this.dataGridView1.TabIndex = 2;
             // 
             // checkedListBox1

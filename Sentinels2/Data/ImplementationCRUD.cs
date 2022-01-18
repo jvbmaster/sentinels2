@@ -10,6 +10,7 @@ namespace Sentinels2.Data
     internal class FeriadoCRUD : Repository<Feriado, Context> { }
     internal class LicencaPremioCRUD : Repository<LicencaPremio, Context> { }
     internal class OpcaoDeFeriasCRUD : Repository<OpcaoDeFerias, Context> { }
+    internal class OficioExpedidoCRUD : Repository<OficioExpedido, Context> { }
     internal class PassaAgulhaCRUD : Repository<PassaAgulha, Context> { }
     internal class PatrimonioCRUD : Repository<Patrimonio, Context> { }
     internal class UserCRUD : Repository<User, Context> { }

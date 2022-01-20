@@ -165,9 +165,7 @@ namespace Sentinels2
                     case "Outros": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                 }
 
-                ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
-                process.Arguments = $"{Relatorios.filenametosave}.docx";
-                Process.Start(process);
+                AbrirArquivoParaImpressao();
             }
             catch (Exception ex)
             {
@@ -184,11 +182,20 @@ namespace Sentinels2
                 Relatorios relatorios = new Relatorios();
                 relatorios.GerarOrdemDeServico(escalas);
                 MessageBox.Show("Cool");
+
+                AbrirArquivoParaImpressao();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void AbrirArquivoParaImpressao()
+        {
+            ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
+            process.Arguments = $"{Relatorios.filenametosave}.docx";
+            Process.Start(process);
         }
 
         private void WorkflowByPerson_Load(object sender, EventArgs e)
@@ -329,6 +336,8 @@ namespace Sentinels2
 
         private void btnSendMsg_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Função em desenvolvimento\nem breve essa função estará disponível!\nCooming Soon!");
+            return;
             try
             {
                 Thread th = new Thread(

@@ -99,9 +99,9 @@ namespace Sentinels2
             // 
             this.btnSendMsg.Location = new System.Drawing.Point(299, 200);
             this.btnSendMsg.Name = "btnSendMsg";
-            this.btnSendMsg.Size = new System.Drawing.Size(142, 41);
+            this.btnSendMsg.Size = new System.Drawing.Size(217, 41);
             this.btnSendMsg.TabIndex = 3;
-            this.btnSendMsg.Text = "Avisar Plantões";
+            this.btnSendMsg.Text = "Avisar Plantões à Todos";
             this.btnSendMsg.UseVisualStyleBackColor = true;
             this.btnSendMsg.Click += new System.EventHandler(this.btnSendMsg_Click);
             // 

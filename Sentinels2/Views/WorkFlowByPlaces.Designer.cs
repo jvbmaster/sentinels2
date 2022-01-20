@@ -94,6 +94,7 @@
             this.dgvDates.TabIndex = 3;
             this.dgvDates.SelectionChanged += new System.EventHandler(this.dgvDates_SelectionChanged);
             this.dgvDates.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvDates_MouseClick);
+            this.dgvDates.MouseCaptureChanged += new System.EventHandler(this.dgvDates_MouseCaptureChanged);
             // 
             // dgvPersons
             // 

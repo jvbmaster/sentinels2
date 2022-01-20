@@ -10,7 +10,7 @@ namespace Sentinels2.Views
     public partial class WorkflowByDate : Form
     {
         private int totalDays = 0;
-        private int periodos = 0;
+        private string periodos = "A";
         private DateTime dataInicial, dataFinal;
         private Afastamento afastamento;
         public WorkflowByDate()
@@ -43,9 +43,9 @@ namespace Sentinels2.Views
                 
                 switch (periodos)
                 {
-                    case 0: dataf = data; break;
-                    case 1: dataf = data.Where(x => x.Saida.Hour > x.Entrada.Hour); break;
-                    case 2: dataf = data.Where(x => x.Saida.Hour < x.Entrada.Hour); break;
+                    case "A": dataf = data; break;
+                    case "D": dataf = data.Where(x => x.Saida.Hour > x.Entrada.Hour); break;
+                    case "N": dataf = data.Where(x => x.Saida.Hour < x.Entrada.Hour); break;
                 }
 
                 dgvEscala.DataSource = dataf.Select(p => new {
@@ -70,7 +70,7 @@ namespace Sentinels2.Views
                     {
                         afastamento = AfastamentoCRUD.Find(afastamentoId);
                         vgmescalado = row.Cells[6].Value.ToString();
-                        row.DefaultCellStyle.BackColor = (vgmescalado == afastamento.Funcionario) ? Color.Red : Color.LightGreen;
+                        row.DefaultCellStyle.BackColor = (vgmescalado == afastamento.Funcionario || vgmescalado == "") ? Color.Red : Color.LightGreen;
                     }
                 }
 
@@ -85,7 +85,7 @@ namespace Sentinels2.Views
             try
             {
                 // Apenas Vigias Disponíveis
-                List<Vigia> vigias = PersonWorkflow.AvailableOnDate(calendar.SelectionStart);
+                List<Vigia> vigias = PersonWorkflow.AvailableOnDate(calendar.SelectionStart, periodos);
                 // Apenas Escalas pagas como EXTRA no período especificado
                 List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal) ).ToList();
 
@@ -268,25 +268,70 @@ namespace Sentinels2.Views
 
         private void opTodos_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 0;
+            periodos = "A";
             LoadDataFromDate();
         }
 
         private void opDiurno_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 1;
+            periodos = "D";
             LoadDataFromDate();
+        }
+
+        private void dgvEscala_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            dgvEscala.AccessibilityObject.HitTest(MousePosition.X, MousePosition.Y).Select(AccessibleSelection.TakeSelection);
+            ContextMenuOnEscala();
+        }
+
+        private void ContextMenuOnEscala()
+        {
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Editar");
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Excluir");
+
+            item1.Click += EditarRegistro;
+            item2.Click += ExcluirRegistro;
+
+            menu.Items.Clear();
+            menu.Items.Add(item1);
+            menu.Items.Add(item2);
+
+            dgvEscala.ContextMenuStrip = menu;
+        }
+
+        private void ExcluirRegistro(object? sender, EventArgs e)
+        {
+            try
+            {
+                int os = int.Parse(dgvEscala.CurrentRow.Cells[0].Value.ToString());
+                EscalaCRUD.Delete(os);
+                LoadDataFromDate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
+            }
+        }
+
+        private void EditarRegistro(object? sender, EventArgs e)
+        {
+            try
+            {
+                int os = int.Parse(dgvEscala.CurrentRow.Cells[0].Value.ToString());
+                // Chamar Editor
+                LoadDataFromDate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
+            }
         }
 
         private void opNoturno_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 2;
+            periodos = "N";
             LoadDataFromDate();
         }
 
-        private void zerarOrdensDeServiçoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
     }
 }

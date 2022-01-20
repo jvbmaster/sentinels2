@@ -88,5 +88,7 @@ namespace Sentinels2.Data
             modelBuilder.Entity<Vigia>().HasKey(e => e.Id);
             base.OnModelCreating(modelBuilder);
         }
+
+        
     }
 }

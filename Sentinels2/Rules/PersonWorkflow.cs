@@ -12,14 +12,22 @@ namespace Sentinels2.Rules
     {
         public static List<Vigia> AvailableOnDate(DateTime date, string periodo = "A")
         {
-            List<Vigia> vigias = new List<Vigia>();
+            List<Vigia> disponiveis = new List<Vigia>();
+            List<Vigia> firsfiler = new List<Vigia>();
 
-            VigiaCRUD.GetAll().ToList().ForEach(v => {
+            switch(periodo)
+            {
+                case "A": firsfiler = VigiaCRUD.GetAll().ToList(); break;
+                case "N": firsfiler = VigiaCRUD.Get(p => p.Turno.Equals("N")).ToList(); break;
+                case "D": firsfiler = VigiaCRUD.Get(p => p.Turno.Equals("D")).ToList(); break;
+            }
+
+            firsfiler.ForEach(v => {
                 if (EscalaCRUD.Get(p => p.Vigia.Equals(v.Id) && p.Data.Equals(date)).Count() < 1)
                 {
                     if(AfastamentoCRUD.Get(p => p.Funcionario.Equals(v.Id) && (p.DataInicial <= date && p.DataFinal >= date)).ToList().Count() < 1)
                     {
-                        vigias.Add(v);
+                        disponiveis.Add(v);
                     }
 
                     /// Consulta ROW
@@ -36,7 +44,7 @@ namespace Sentinels2.Rules
                 }
             });
 
-            return vigias;
+            return disponiveis.OrderBy(p => p.Id).ToList();
         }
 
         public static void Escalar(int os, string pessoa, string faturamento)

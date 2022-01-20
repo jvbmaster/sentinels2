@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.calendar = new System.Windows.Forms.MonthCalendar();
             this.label1 = new System.Windows.Forms.Label();
             this.lbCurrentDate = new System.Windows.Forms.Label();
-            this.dgvPessoalDisponivel = new System.Windows.Forms.DataGridView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.lbTotalDays = new System.Windows.Forms.GroupBox();
@@ -42,12 +40,13 @@
             this.dgvEscala = new System.Windows.Forms.DataGridView();
             this.plVgm = new System.Windows.Forms.GroupBox();
             this.dgvPlVgm = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).BeginInit();
+            this.dgvPessoalDisponivel = new System.Windows.Forms.DataGridView();
             this.statusStrip1.SuspendLayout();
             this.lbTotalDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEscala)).BeginInit();
             this.plVgm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).BeginInit();
             this.SuspendLayout();
             // 
             // calendar
@@ -84,31 +83,6 @@
             this.lbCurrentDate.Name = "lbCurrentDate";
             this.lbCurrentDate.Size = new System.Drawing.Size(0, 24);
             this.lbCurrentDate.TabIndex = 3;
-            // 
-            // dgvPessoalDisponivel
-            // 
-            this.dgvPessoalDisponivel.AllowUserToAddRows = false;
-            this.dgvPessoalDisponivel.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.dgvPessoalDisponivel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvPessoalDisponivel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvPessoalDisponivel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dgvPessoalDisponivel.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dgvPessoalDisponivel.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvPessoalDisponivel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvPessoalDisponivel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPessoalDisponivel.Location = new System.Drawing.Point(957, 92);
-            this.dgvPessoalDisponivel.MultiSelect = false;
-            this.dgvPessoalDisponivel.Name = "dgvPessoalDisponivel";
-            this.dgvPessoalDisponivel.ReadOnly = true;
-            this.dgvPessoalDisponivel.RowHeadersVisible = false;
-            this.dgvPessoalDisponivel.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.dgvPessoalDisponivel.RowTemplate.Height = 25;
-            this.dgvPessoalDisponivel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPessoalDisponivel.Size = new System.Drawing.Size(322, 247);
-            this.dgvPessoalDisponivel.TabIndex = 5;
-            this.dgvPessoalDisponivel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPessoalDisponivel_MouseClick);
-            this.dgvPessoalDisponivel.MouseCaptureChanged += new System.EventHandler(this.dgvPessoalDisponivel_MouseCaptureChanged);
             // 
             // statusStrip1
             // 
@@ -195,6 +169,7 @@
             this.dgvEscala.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvEscala.Size = new System.Drawing.Size(693, 437);
             this.dgvEscala.TabIndex = 8;
+            this.dgvEscala.MouseCaptureChanged += new System.EventHandler(this.dgvEscala_MouseCaptureChanged);
             // 
             // plVgm
             // 
@@ -227,17 +202,40 @@
             this.dgvPlVgm.Size = new System.Drawing.Size(316, 166);
             this.dgvPlVgm.TabIndex = 3;
             // 
+            // dgvPessoalDisponivel
+            // 
+            this.dgvPessoalDisponivel.AllowUserToAddRows = false;
+            this.dgvPessoalDisponivel.AllowUserToDeleteRows = false;
+            this.dgvPessoalDisponivel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvPessoalDisponivel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgvPessoalDisponivel.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dgvPessoalDisponivel.BackgroundColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvPessoalDisponivel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPessoalDisponivel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPessoalDisponivel.Location = new System.Drawing.Point(960, 92);
+            this.dgvPessoalDisponivel.MultiSelect = false;
+            this.dgvPessoalDisponivel.Name = "dgvPessoalDisponivel";
+            this.dgvPessoalDisponivel.ReadOnly = true;
+            this.dgvPessoalDisponivel.RowHeadersVisible = false;
+            this.dgvPessoalDisponivel.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvPessoalDisponivel.RowTemplate.Height = 25;
+            this.dgvPessoalDisponivel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPessoalDisponivel.Size = new System.Drawing.Size(319, 237);
+            this.dgvPessoalDisponivel.TabIndex = 12;
+            this.dgvPessoalDisponivel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPessoalDisponivel_MouseClick);
+            this.dgvPessoalDisponivel.MouseCaptureChanged += new System.EventHandler(this.dgvPessoalDisponivel_MouseCaptureChanged);
+            // 
             // WorkflowByDate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1291, 685);
+            this.Controls.Add(this.dgvPessoalDisponivel);
             this.Controls.Add(this.plVgm);
             this.Controls.Add(this.dgvEscala);
             this.Controls.Add(this.lbTotalDays);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.dgvPessoalDisponivel);
             this.Controls.Add(this.lbCurrentDate);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
@@ -246,7 +244,6 @@
             this.Text = "Sentinels2 - Workflow By Date - Barbieri Computer";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.WorkflowByDate_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).EndInit();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.lbTotalDays.ResumeLayout(false);
@@ -254,6 +251,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvEscala)).EndInit();
             this.plVgm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -303,12 +301,15 @@
 
         private void calendar_MouseCaptureChanged(object sender, EventArgs e)
         {
+            //calendar.AccessibilityObject.HitTest(MousePosition.X, MousePosition.Y).Select(AccessibleSelection.TakeSelection);
             ContextMenuOnCalendar();
         }
 
         private void dgvPessoalDisponivel_MouseCaptureChanged(object sender, EventArgs e)
         {
+            dgvPessoalDisponivel.AccessibilityObject.HitTest(MousePosition.X, MousePosition.Y).Select(AccessibleSelection.TakeSelection);
             ContextMenuOnPessoalDisponivel();
+            LoadPlantoesPorVGM();
         }
 
         
@@ -318,7 +319,6 @@
         private Label label1;
         private Label lbCurrentDate;
         private ContextMenuStrip menu = new ContextMenuStrip();
-        private DataGridView dgvPessoalDisponivel;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel statusLabel;
         private GroupBox lbTotalDays;
@@ -328,5 +328,6 @@
         private RadioButton opNoturno;
         private RadioButton opTodos;
         private RadioButton opDiurno;
+        private DataGridView dgvPessoalDisponivel;
     }
 }

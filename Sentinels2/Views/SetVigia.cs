@@ -101,16 +101,16 @@ namespace Sentinels2.Views
                         case "Férias": report.GerarFerias(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Licença Prêmio": report.GerarLicencaPremio(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Licença Saúde": report.GerarLicencaMedica(AfastamentoCRUD.ObjectInstanceate); break;
-                        case "Casamento": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Licença Casamento": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Doação de Sanguê": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
-                        case "Paternidade": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
+                        case "Licença Paternidade": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Luto": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                         case "TRE": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                         case "Outros": report.GerarAfastamento(AfastamentoCRUD.ObjectInstanceate); break;
                     }
+                    
+                    DialogResult = DialogResult.Yes;
                 }
-
-                DialogResult = DialogResult.Yes;
                 Close();
             }
             catch (Exception ex)

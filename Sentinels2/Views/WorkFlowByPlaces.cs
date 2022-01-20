@@ -3,6 +3,7 @@ using System.Globalization;
 using Sentinels2.Data;
 using Sentinels2.Models;
 using Sentinels2.Rules;
+using Sentinels2.Tools;
 
 namespace Sentinels2.Views
 {
@@ -12,7 +13,7 @@ namespace Sentinels2.Views
         private Patrimonio patrimonio;
         private DateTime dataInicial, dataFinal;
         private ContextMenuStrip menu = new ContextMenuStrip();
-        private int periodos = 0;
+        private string periodos = "A";
         private Afastamento afastamento;
         public WorkFlowByPlaces()
         {
@@ -48,9 +49,9 @@ namespace Sentinels2.Views
 
                 switch (periodos)
                 {
-                    case 0: dataf = data.ToList(); break;
-                    case 1: dataf = data.Where(x => x.Saida.Hour > x.Entrada.Hour).ToList(); break;
-                    case 2: dataf = data.Where(x => x.Saida.Hour < x.Entrada.Hour).ToList(); break;
+                    case "A": dataf = data.ToList(); break;
+                    case "D": dataf = data.Where(x => x.Saida.Hour > x.Entrada.Hour).ToList(); break;
+                    case "N": dataf = data.Where(x => x.Saida.Hour < x.Entrada.Hour).ToList(); break;
                 }
 
                 dgvDates.DataSource = dataf
@@ -91,7 +92,7 @@ namespace Sentinels2.Views
             {
                 DateTime dt = DateTime.Parse(dgvDates.CurrentRow.Cells[1].Value.ToString());
                 // Apenas Vigias Disponíveis
-                List<Vigia> vigias = PersonWorkflow.AvailableOnDate(dt);
+                List<Vigia> vigias = PersonWorkflow.AvailableOnDate(dt, periodos);
                 // Apenas Escalas pagas como EXTRA no período especificado
                 List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal)).ToList();
 
@@ -235,19 +236,19 @@ namespace Sentinels2.Views
 
         private void opTodos_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 0;
+            periodos = "A";
             LoadDates();
         }
 
         private void opDiurno_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 1;
+            periodos = "D";
             LoadDates();
         }
 
         private void opNoturno_CheckedChanged(object sender, EventArgs e)
         {
-            periodos = 2;
+            periodos = "N";
             LoadDates();
         }
 
@@ -265,8 +266,58 @@ namespace Sentinels2.Views
             ContextMenuOnPlaces();
         }
 
+        private void dgvDates_MouseCaptureChanged(object sender, EventArgs e)
+        {
+            dgvDates.AccessibilityObject.HitTest(MousePosition.X, MousePosition.Y).Select(AccessibleSelection.TakeSelection);
+            ContextMenuOnDates();
+        }
+
+        private void ContextMenuOnDates()
+        {
+            ToolStripMenuItem item1 = new ToolStripMenuItem("Editar");
+            ToolStripMenuItem item2 = new ToolStripMenuItem("Excluir");
+
+            item1.Click += EditarRegistro;
+            item2.Click += ExcluirRegistro;
+
+            menu.Items.Clear();
+            menu.Items.Add(item1);
+            menu.Items.Add(item2);
+
+            dgvDates.ContextMenuStrip = menu;
+        }
+
+        private void ExcluirRegistro(object? sender, EventArgs e)
+        {
+            try
+            {
+                int os = int.Parse(dgvDates.CurrentRow.Cells[0].Value.ToString());
+                EscalaCRUD.Delete(os);
+                LoadDates();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
+            }
+        }
+
+        private void EditarRegistro(object? sender, EventArgs e)
+        {
+            try
+            {
+                int os = int.Parse(dgvDates.CurrentRow.Cells[0].Value.ToString());
+                // Chamar Editor
+                LoadDates();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
+            }
+        }
         private void dgvPersons_MouseCaptureChanged(object sender, EventArgs e)
         {
+            //MasterForm.SetRowOnRightClick(dgvPersons);
+            dgvPersons.AccessibilityObject.HitTest(MousePosition.X, MousePosition.Y).Select(AccessibleSelection.TakeSelection);
             ContextMenuOnPersons();
         }
     }

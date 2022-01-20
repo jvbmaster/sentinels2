@@ -6,36 +6,33 @@ namespace Sentinels2.Data
     internal class Repository<T, S> where T : class, new()
                                    where S : DbContext, IDisposable, new()
     {
-        private static S _context;
+        private static S? _context;
 
-        public static T ObjectInstanceate = new T();
-        public static T Loaded { get; set; }
+        public static T? ObjectInstanceate = new T();
+        public static T? Loaded { get; set; }
 
-        private static void Instanceate() => _context = new S(); 
-  
-        private static void Commit() => _context.SaveChanges();
-       
         public static IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            Instanceate();
-            return _context.Set<T>().Where(predicate);
+            _context = new S();
+           return _context.Set<T>().Where(predicate);
         }
 
         public static IQueryable<T> GetAll()
         {
-            Instanceate();
+            _context = new S();
             return _context.Set<T>();
+
         }
 
-        public static T Find(params object[] key)
+        public static T ?Find(params object[] key)
         {
-            Instanceate();
+            _context = new S();
             return _context.Set<T>().Find(key);
         }
 
-        public static T Find(Expression<Func<T, bool>> predicate)
+        public static T ?Find(Expression<Func<T, bool>> predicate)
         {
-            Instanceate();
+            _context = new S();
             return _context.Set<T>().Where(predicate).FirstOrDefault();
         }
 
@@ -56,39 +53,38 @@ namespace Sentinels2.Data
 
         public static void Insert(T entity)
         {
-            Instanceate();
+            _context = new S();
             _context.Set<T>().Add(entity);
-            Commit();
+            _context.SaveChanges();
         }
         
         public static void Update(T entity)
         {
-            Instanceate();
+            _context = new S();
             _context.Entry(entity).State = EntityState.Modified;
-            Commit();
+            _context.SaveChanges();
         }
 
         public static void Delete(Expression<Func<T, bool>> predicate)
         {
-            Instanceate();
-            _context.Set<T>().Where(predicate).ToList()
-                .ForEach(del => _context.Set<T>().Remove(del));
-            Commit();
+            _context = new S();
+            _context.Set<T>().Where(predicate).ToList().ForEach(del => _context.Set<T>().Remove(del));
+            _context.SaveChanges();
         }
 
         public static void Delete(T entity)
         {
-            Instanceate();
+            _context = new S();
             _context.Set<T>().Remove(entity);
-            Commit();
+            _context.SaveChanges();
         }
 
         public static void Delete(int entityID)
         {
-            Instanceate();
+            _context = new S();
             var id = Find(entityID);
             _context.Set<T>().Remove(id);
-            Commit();
+            _context.SaveChanges();
         }
 
     }

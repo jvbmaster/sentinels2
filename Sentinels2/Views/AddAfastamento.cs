@@ -4,10 +4,10 @@ using Sentinels2.Rules;
 
 namespace Sentinels2.Views
 {
-    public partial class SetVigia : Form
+    public partial class AddAfastamento : Form
     {
         private string tipoAfastamento;
-        public SetVigia()
+        public AddAfastamento()
         {
             InitializeComponent();
         }

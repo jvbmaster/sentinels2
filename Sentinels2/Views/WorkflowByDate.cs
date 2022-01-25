@@ -92,7 +92,7 @@ namespace Sentinels2.Views
                 var data = from v in vigias
                            let t = escalas.Where(x => x.Vigia.Equals(v.Id)).Count()
                            let d = escalas.Where(x => x.Vigia.Equals(v.Id)).Sum(x => x.Duracao.TotalHours)
-                          // let aux_u = escalas.Where(x => x.Vigia.Equals(v.Id)).Last()
+                           //let aux_u = escalas.Where(x => x.Vigia.Equals(v.Id)).Last()
                            select new {
                                Disponivéis = v.Id,
                                Plantões = t,
@@ -156,7 +156,7 @@ namespace Sentinels2.Views
             AfastamentoCRUD.ObjectInstanceate.QuantidadeDias = totalDays;
             AfastamentoCRUD.ObjectInstanceate.DataFinal = (totalDays > 1) ? calendar.SelectionEnd.Date : calendar.SelectionStart.Date;
             
-            if(new SetVigia().ShowDialog() == DialogResult.Yes)
+            if(new AddAfastamento().ShowDialog() == DialogResult.Yes)
             {
                 ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
                 process.Arguments = $"{Relatorios.filenametosave}.docx";

@@ -1,4 +1,5 @@
 ﻿using Sentinels2.Data;
+using Sentinels2.Models;
 using Sentinels2.Views;
 
 namespace Sentinels2
@@ -460,15 +461,39 @@ namespace Sentinels2
             };
 
             item5.Click += (object sender, EventArgs e) => {
-                
+                try
+                {
+                    Afastamento afastamento = AfastamentoCRUD.Find(int.Parse(dgvDataPerson.CurrentRow.Cells[0].Value.ToString()));
+                    EscalaCRUD.GetAll().ToList().ForEach(
+                        i => {
+                            if(i.AfastamentoVGF.Equals(afastamento.Id))
+                            {
+                                i.AfastamentoVGF = 0;
+                                EscalaCRUD.Update(i);
+                            }
+                        }
+                    );
+                    AfastamentoCRUD.Delete(afastamento);
+                    LoadAfastamentos();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
+                }
             };
 
             menu.Items.Clear();
-            menu.Items.Add(item1);
-            menu.Items.Add(item2);
-            menu.Items.Add(item3);
-            menu.Items.Add(item4);
-            menu.Items.Add(item5);
+            if(opHoraExtra.Checked ==  true)
+            {
+                menu.Items.Add(item1);
+                menu.Items.Add(item2);
+                menu.Items.Add(item3);
+            }
+            if(opAfastamento.Checked == true)
+            {
+                //menu.Items.Add(item4);
+                menu.Items.Add(item5);
+            }
 
             dgvDataPerson.ContextMenuStrip = menu;
         }

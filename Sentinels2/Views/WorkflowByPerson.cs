@@ -12,8 +12,6 @@ namespace Sentinels2
         private List<Vigia> vigias = VigiaCRUD.GetAll().ToList();
         private Vigia vigia;
         private int modoExibicao = 0;
-        List<string> ids = new List<string>();
-        private int idx = 0;
 
         private ContextMenuStrip menu = new ContextMenuStrip();
         public WorkflowByPerson()

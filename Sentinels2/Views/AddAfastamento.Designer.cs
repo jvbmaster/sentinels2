@@ -1,6 +1,6 @@
 ﻿namespace Sentinels2.Views
 {
-    partial class SetVigia
+    partial class AddAfastamento
     {
         /// <summary>
         /// Required designer variable.

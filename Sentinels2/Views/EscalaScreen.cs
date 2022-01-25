@@ -123,10 +123,14 @@ namespace Sentinels2.Views
                             es.Patrimonio = p.PatrimonioId;
                             es.Data = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day);
                             es.Entrada = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day, p.Entrada.Hours, p.Entrada.Minutes, 0);
-                            es.Saida = es.Entrada.AddHours((p.Duracao == 24) ? 12 : p.Duracao);
+                            es.Saida = new DateTime(d.Date.Year, d.Date.Month, d.Date.Day, p.Saida.Hours, p.Saida.Minutes, 0);
+                            if(es.Saida.Hour < es.Entrada.Hour)
+                            {
+                                es.Saida.AddDays(1);
+                            }
                             es.TipoPagamento = "";
                             es.Motivo = p.Motivo;
-                            es.Duracao = (p.Duracao == 24) ? 12 : p.Duracao;
+                            es.Duracao = (es.Saida - es.Entrada).Duration();
                             es.Vigia = "";
                             es.AfastamentoVGF = 0;
                             try
@@ -164,6 +168,16 @@ namespace Sentinels2.Views
         private void button6_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void autoEscalarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fixaCompletaNoPeríodoSelecionadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new GeradorDeEscala().Execute();
         }
     }
 }

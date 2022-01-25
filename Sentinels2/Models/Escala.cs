@@ -17,7 +17,7 @@ namespace Sentinels2.Models
         public string Vigia { get; set; }
         public string Motivo { get; set; }
         public string TipoPagamento { get; set; }
-        public double Duracao { get; set; }
+        public TimeSpan Duracao { get; set; }
         public int AfastamentoVGF { get; set; }
         public void Dispose()
         {

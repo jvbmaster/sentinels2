@@ -248,7 +248,7 @@
             // 
             this.fTelefone.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fTelefone.Location = new System.Drawing.Point(3, 25);
-            this.fTelefone.Mask = "(99) 9 9999-9999";
+            this.fTelefone.Mask = "(999) 9 9999-9999";
             this.fTelefone.Name = "fTelefone";
             this.fTelefone.Size = new System.Drawing.Size(142, 29);
             this.fTelefone.TabIndex = 8;
@@ -267,7 +267,7 @@
             // 
             this.fTelefone2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fTelefone2.Location = new System.Drawing.Point(3, 25);
-            this.fTelefone2.Mask = "(99) 9999-9999";
+            this.fTelefone2.Mask = "(999) 9999-9999";
             this.fTelefone2.Name = "fTelefone2";
             this.fTelefone2.Size = new System.Drawing.Size(139, 29);
             this.fTelefone2.TabIndex = 9;

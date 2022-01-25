@@ -174,7 +174,7 @@ namespace Sentinels2.Views
                         es.Saida = es.Entrada.AddHours((ph.Duracao == 24) ? 12 : ph.Duracao);
                         es.TipoPagamento = "";
                         es.Motivo = ph.Motivo;
-                        es.Duracao = (ph.Duracao == 24) ? 12 : ph.Duracao;
+                        es.Duracao = (es.Saida - es.Entrada).Duration();
                         es.Vigia = "";
                         es.AfastamentoVGF = 0;
                         try

@@ -91,7 +91,7 @@ namespace Sentinels2.Views
 
                 var data = from v in vigias
                            let t = escalas.Where(x => x.Vigia.Equals(v.Id)).Count()
-                           let d = escalas.Where(x => x.Vigia.Equals(v.Id)).Sum(x => x.Duracao)
+                           let d = escalas.Where(x => x.Vigia.Equals(v.Id)).Sum(x => x.Duracao.TotalHours)
                           // let aux_u = escalas.Where(x => x.Vigia.Equals(v.Id)).Last()
                            select new {
                                Disponivéis = v.Id,
@@ -288,15 +288,33 @@ namespace Sentinels2.Views
         {
             ToolStripMenuItem item1 = new ToolStripMenuItem("Editar");
             ToolStripMenuItem item2 = new ToolStripMenuItem("Excluir");
+            ToolStripMenuItem item3 = new ToolStripMenuItem("Limpar Escala");
 
             item1.Click += EditarRegistro;
             item2.Click += ExcluirRegistro;
+            item3.Click += LimparEscala;
 
             menu.Items.Clear();
             menu.Items.Add(item1);
             menu.Items.Add(item2);
+            menu.Items.Add(item3);
 
             dgvEscala.ContextMenuStrip = menu;
+        }
+
+        private void LimparEscala(object? sender, EventArgs e)
+        {
+            try
+            {
+                Escala escala = EscalaCRUD.Find(int.Parse(dgvEscala.CurrentRow.Cells[0].Value.ToString()));
+                escala.Vigia = "";
+                EscalaCRUD.Update(escala);
+                LoadDataFromDate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Não foi possível modificar os dados\nErro: {ex.Message}");
+            }
         }
 
         private void ExcluirRegistro(object? sender, EventArgs e)

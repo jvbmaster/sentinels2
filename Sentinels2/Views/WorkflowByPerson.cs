@@ -26,8 +26,10 @@ namespace Sentinels2
         {
             try
             {
-                dgvPessoal.DataSource = (busca == "") 
+                List<Vigia> firstFilter = (busca == "") 
                     ? vigias : vigias.Where(p => p.Nome.Contains(busca.ToUpper())).ToList();
+
+                dgvPessoal.DataSource = firstFilter.OrderBy(p => p.Id).ToList();
 
                 for (int i = 1; i <= dgvPessoal.Columns.Count; i++)
                 {

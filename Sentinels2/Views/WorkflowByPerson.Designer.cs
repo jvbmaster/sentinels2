@@ -440,6 +440,8 @@ namespace Sentinels2
             ToolStripMenuItem item1 = new ToolStripMenuItem("Gerar Ordem de Serviço");
             ToolStripMenuItem item2 = new ToolStripMenuItem("Enviar para Telefone");
             ToolStripMenuItem item3 = new ToolStripMenuItem("Imprimir Documento Selecionado");
+            ToolStripMenuItem item4 = new ToolStripMenuItem("Editar");
+            ToolStripMenuItem item5 = new ToolStripMenuItem("Excluir");
 
             item1.Click += (object sender, EventArgs e) => {
                 MessageBox.Show("Hello");
@@ -453,10 +455,20 @@ namespace Sentinels2
                 MessageBox.Show("Hello");
             };
 
+            item4.Click += (object sender, EventArgs e) => {
+                
+            };
+
+            item5.Click += (object sender, EventArgs e) => {
+                
+            };
+
             menu.Items.Clear();
             menu.Items.Add(item1);
             menu.Items.Add(item2);
             menu.Items.Add(item3);
+            menu.Items.Add(item4);
+            menu.Items.Add(item5);
 
             dgvDataPerson.ContextMenuStrip = menu;
         }

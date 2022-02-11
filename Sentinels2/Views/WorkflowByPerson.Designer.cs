@@ -231,8 +231,7 @@ namespace Sentinels2
             this.dgvPessoal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvPessoal.Size = new System.Drawing.Size(185, 197);
             this.dgvPessoal.TabIndex = 8;
-            this.dgvPessoal.SelectionChanged += new System.EventHandler(this.dgvPessoal_SelectionChanged);
-            this.dgvPessoal.MouseCaptureChanged += new System.EventHandler(this.dgvPessoal_MouseCaptureChanged);
+            this.dgvPessoal.Click += new System.EventHandler(this.dgvPessoal_Click);
             // 
             // panel3
             // 
@@ -365,7 +364,6 @@ namespace Sentinels2
             this.dgvDataPerson.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDataPerson.Size = new System.Drawing.Size(910, 139);
             this.dgvDataPerson.TabIndex = 11;
-            this.dgvDataPerson.MultiSelectChanged += new System.EventHandler(this.dgvDataPerson_MultiSelectChanged);
             this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
             // 
             // WorkflowByPerson
@@ -404,99 +402,7 @@ namespace Sentinels2
 
         }
 
-        private void dgvPessoal_MouseCaptureChanged(object sender, EventArgs e)
-        {
-            ContextMenuOnPersons();
-        }
-
-        private void dgvDataPerson_MouseCaptureChanged(object sender, EventArgs e)
-        {
-            ContextMenuOnData();
-        }
-
-        private void ContextMenuOnPersons()
-        {
-            ToolStripMenuItem item1 = new ToolStripMenuItem("Editar");
-            item1.Click += (object sender, EventArgs e) => {
-                try
-                {
-                    VigiaCRUD.Load(vigia.Id);
-
-                    new NewVigia().ShowDialog();
-                }
-                catch (Exception ex)
-                {
-                    statusLabel.Text = $"LOAD_VGM: {ex.Message}";
-                }
-            };
-
-            menu.Items.Clear();
-            menu.Items.Add(item1);
-
-            dgvPessoal.ContextMenuStrip = menu;
-        }
-
-        private void ContextMenuOnData()
-        {
-            ToolStripMenuItem item1 = new ToolStripMenuItem("Gerar Ordem de Serviço");
-            ToolStripMenuItem item2 = new ToolStripMenuItem("Enviar para Telefone");
-            ToolStripMenuItem item3 = new ToolStripMenuItem("Imprimir Documento Selecionado");
-            ToolStripMenuItem item4 = new ToolStripMenuItem("Editar");
-            ToolStripMenuItem item5 = new ToolStripMenuItem("Excluir");
-
-            item1.Click += (object sender, EventArgs e) => {
-                MessageBox.Show("Hello");
-            };
-
-            item2.Click += (object sender, EventArgs e) => {
-                MessageBox.Show("Hello");
-            };
-
-            item3.Click += (object sender, EventArgs e) => {
-                MessageBox.Show("Hello");
-            };
-
-            item4.Click += (object sender, EventArgs e) => {
-                
-            };
-
-            item5.Click += (object sender, EventArgs e) => {
-                try
-                {
-                    Afastamento afastamento = AfastamentoCRUD.Find(int.Parse(dgvDataPerson.CurrentRow.Cells[0].Value.ToString()));
-                    EscalaCRUD.GetAll().ToList().ForEach(
-                        i => {
-                            if(i.AfastamentoVGF.Equals(afastamento.Id))
-                            {
-                                i.AfastamentoVGF = 0;
-                                EscalaCRUD.Update(i);
-                            }
-                        }
-                    );
-                    AfastamentoCRUD.Delete(afastamento);
-                    LoadAfastamentos();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Não foi possível excluir os dados\nErro: {ex.Message}");
-                }
-            };
-
-            menu.Items.Clear();
-            if(opHoraExtra.Checked ==  true)
-            {
-                menu.Items.Add(item1);
-                menu.Items.Add(item2);
-                menu.Items.Add(item3);
-            }
-            if(opAfastamento.Checked == true)
-            {
-                //menu.Items.Add(item4);
-                menu.Items.Add(item5);
-            }
-
-            dgvDataPerson.ContextMenuStrip = menu;
-        }
+       
 
         #endregion
         private Panel panel1;

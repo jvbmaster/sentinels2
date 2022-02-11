@@ -38,5 +38,30 @@ namespace Sentinels2.Views
         {
             dataGridView1.DataSource = PassaAgulhaCRUD.GetAll().ToList();
         }
+
+        private void inverterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Tem certeza que deseja inverter a escala ?", "Atenção", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    List<PassaAgulha> lista = PassaAgulhaCRUD.GetAll().ToList();
+                    string aux;
+                    foreach (var item in lista)
+                    {
+                        aux = item.Par;
+                        item.Par = item.Impar;
+                        item.Impar = aux;
+
+                        PassaAgulhaCRUD.Update(item);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Falha ao inverter escala fixa");
+                }
+            }
+            dataGridView1.DataSource = PassaAgulhaCRUD.GetAll().ToList();
+        }
     }
 }

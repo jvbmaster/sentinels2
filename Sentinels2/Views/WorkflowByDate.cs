@@ -11,24 +11,23 @@ namespace Sentinels2.Views
     {
         private int totalDays = 0;
         private string periodos = "A";
-        private DateTime dataInicial, dataFinal;
         private Afastamento afastamento;
         public WorkflowByDate()
         {
             InitializeComponent();
+            opTodos.Checked = true;
         }
 
         private void WorkflowByDate_Load(object sender, EventArgs e)
         {
-           calendar.SelectionStart = DateTime.Now;
-            opTodos.Checked = true;
-           LoadDataFromDate();
+            DateTime dataInicial = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.AddMonths(-1).Month}-{16}");
+            DateTime dataFinal = dataInicial.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, dataInicial.Month) - 1).Date;
+            
+            fDataInicial.Value = dataInicial;
+            fDataFinal.Value = dataFinal;
 
-           int m = DateTime.Now.Month;
-
-           dataInicial = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{16}");
-           dataFinal = dataInicial.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - 1).Date;
-
+            calendar.SelectionStart = DateTime.Now;
+            LoadDataFromDate();
         }
 
         private void LoadDataFromDate()
@@ -87,7 +86,7 @@ namespace Sentinels2.Views
                 // Apenas Vigias Disponíveis
                 List<Vigia> vigias = PersonWorkflow.AvailableOnDate(calendar.SelectionStart, periodos);
                 // Apenas Escalas pagas como EXTRA no período especificado
-                List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal) ).ToList();
+                List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= fDataInicial.Value.Date && p.Data <= fDataFinal.Value.Date) ).ToList();
 
                 var data = from v in vigias
                            let t = escalas.Where(x => x.Vigia.Equals(v.Id)).Count()
@@ -227,7 +226,7 @@ namespace Sentinels2.Views
             try
             {
                 string vgm = dgvPessoalDisponivel.CurrentRow.Cells[0].Value.ToString();
-                dgvPlVgm.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) && p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal))
+                dgvPlVgm.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) && p.TipoPagamento.Equals("EXTRA") && (p.Data >= fDataInicial.Value.Date && p.Data <= fDataFinal.Value.Date))
                     .Select(p => new {
                         p.Data,
                         p.Patrimonio

@@ -13,34 +13,22 @@ namespace Sentinels2.Rules
         public static List<Vigia> AvailableOnDate(DateTime date, string periodo = "A")
         {
             List<Vigia> disponiveis = new List<Vigia>();
-            List<Vigia> firsfiler = new List<Vigia>();
+            List<Vigia> firsfilter = new List<Vigia>();
 
             switch(periodo)
             {
-                case "A": firsfiler = VigiaCRUD.GetAll().ToList(); break;
-                case "N": firsfiler = VigiaCRUD.Get(p => p.Turno.Equals("N")).ToList(); break;
-                case "D": firsfiler = VigiaCRUD.Get(p => p.Turno.Equals("D")).ToList(); break;
+                case "A": firsfilter = VigiaCRUD.Get(p => p.Turno.Equals("N") || p.Turno.Equals("D")).ToList(); break;
+                case "N": firsfilter = VigiaCRUD.Get(p => p.Turno.Equals("N")).ToList(); break;
+                case "D": firsfilter = VigiaCRUD.Get(p => p.Turno.Equals("D")).ToList(); break;
             }
 
-            firsfiler.ForEach(v => {
+            firsfilter.ForEach(v => {
                 if (EscalaCRUD.Get(p => p.Vigia.Equals(v.Id) && p.Data.Equals(date)).Count() < 1)
                 {
                     if(AfastamentoCRUD.Get(p => p.Funcionario.Equals(v.Id) && (p.DataInicial <= date && p.DataFinal >= date)).ToList().Count() < 1)
                     {
                         disponiveis.Add(v);
                     }
-
-                    /// Consulta ROW
-                    /// 
-
-                    //using (Context ctx = new Context())
-                    //{
-                    //    var data = ctx.Afastamentos.FromSqlRaw($"select * from Afastamento where Funcionario = '{v.Id}' and (DataInicial <= '{date.ToString("yyyy-MM-dd")}' AND DataFinal >= '{date.ToString("yyyy-MM-dd")}')").ToList();
-                    //    if(data.Count < 1)
-                    //    {
-                    //        vigias.Add(v);
-                    //    }
-                    //}
                 }
             });
 

@@ -94,7 +94,7 @@ namespace Sentinels2.Views
                 // Apenas Vigias Disponíveis
                 List<Vigia> vigias = PersonWorkflow.AvailableOnDate(dt, periodos);
                 // Apenas Escalas pagas como EXTRA no período especificado
-                List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal)).ToList();
+                List<Escala> escalas = EscalaCRUD.Get(p => p.TipoPagamento.Equals("EXTRA") && (p.Data >= fDataInicial.Value.Date && p.Data <= fDataFinal.Value.Date)).ToList();
 
                 var data = from v in vigias
                            let t = escalas.Where(x => x.Vigia.Equals(v.Id)).Count()
@@ -103,7 +103,7 @@ namespace Sentinels2.Views
                            select new {
                                Disponivéis = v.Id,
                                Plantões = t,
-                               Horas = d,
+                               Horas = d
                                //Ultimo_Realizado = aux_u.Data
                            };
 
@@ -175,7 +175,7 @@ namespace Sentinels2.Views
             try
             {
                 string vgm = dgvPersons.CurrentRow.Cells[0].Value.ToString();
-                dgvPlVgm.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) && p.TipoPagamento.Equals("EXTRA") && (p.Data >= dataInicial && p.Data <= dataFinal))
+                dgvPlVgm.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vgm) && p.TipoPagamento.Equals("EXTRA") && (p.Data >= fDataInicial.Value.Date && p.Data <= fDataFinal.Value.Date))
                     .Select(p => new {
                         p.Data,
                         p.Patrimonio
@@ -201,8 +201,10 @@ namespace Sentinels2.Views
         private void WorkFlowByPlaces_Load(object sender, EventArgs e)
         {
             opTodos.Checked = true;
-            dataInicial = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{16}");
-            dataFinal = dataInicial.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month) - 1).Date;
+            DateTime dataInicial = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.AddMonths(-1).Month}-{16}");
+            DateTime dataFinal = dataInicial.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, dataInicial.Month) - 1).Date;
+            fDataInicial.Value = dataInicial;
+            fDataFinal.Value = dataFinal;
             LoadPlaces();
         }
 

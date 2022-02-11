@@ -44,13 +44,12 @@ namespace Sentinels2.Views
             }
             panelContent.Controls.Clear();
             w = new WorkflowByPerson();
-            w = new WorkflowByPerson();
             w.TopLevel = false;
             w.AutoScroll = true;
             w.FormBorderStyle = FormBorderStyle.None;
             w.WindowState = FormWindowState.Maximized;
             w.Parent = panelContent;
-
+            
             panelContent.Controls.Add(w);
             w.Show();
         }

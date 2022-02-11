@@ -34,6 +34,7 @@
             this.bancoDeDadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.arquivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.inverterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -41,7 +42,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importarToolStripMenuItem});
+            this.importarToolStripMenuItem,
+            this.inverterToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(772, 24);
@@ -99,6 +101,13 @@
             this.dataGridView1.Size = new System.Drawing.Size(772, 429);
             this.dataGridView1.TabIndex = 8;
             // 
+            // inverterToolStripMenuItem
+            // 
+            this.inverterToolStripMenuItem.Name = "inverterToolStripMenuItem";
+            this.inverterToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.inverterToolStripMenuItem.Text = "Inverter";
+            this.inverterToolStripMenuItem.Click += new System.EventHandler(this.inverterToolStripMenuItem_Click);
+            // 
             // SetEscalaFixa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -127,5 +136,6 @@
         private ToolStripMenuItem bancoDeDadosToolStripMenuItem;
         private ToolStripMenuItem arquivoToolStripMenuItem;
         private DataGridView dataGridView1;
+        private ToolStripMenuItem inverterToolStripMenuItem;
     }
 }

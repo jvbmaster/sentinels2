@@ -41,12 +41,18 @@
             this.plVgm = new System.Windows.Forms.GroupBox();
             this.dgvPlVgm = new System.Windows.Forms.DataGridView();
             this.dgvPessoalDisponivel = new System.Windows.Forms.DataGridView();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fDataInicial = new System.Windows.Forms.DateTimePicker();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.fDataFinal = new System.Windows.Forms.DateTimePicker();
             this.statusStrip1.SuspendLayout();
             this.lbTotalDays.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEscala)).BeginInit();
             this.plVgm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // calendar
@@ -225,12 +231,54 @@
             this.dgvPessoalDisponivel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPessoalDisponivel_MouseClick);
             this.dgvPessoalDisponivel.MouseCaptureChanged += new System.EventHandler(this.dgvPessoalDisponivel_MouseCaptureChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.fDataInicial);
+            this.groupBox1.Location = new System.Drawing.Point(983, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(134, 70);
+            this.groupBox1.TabIndex = 13;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Data Ínicial";
+            // 
+            // fDataInicial
+            // 
+            this.fDataInicial.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataInicial.Location = new System.Drawing.Point(3, 25);
+            this.fDataInicial.Name = "fDataInicial";
+            this.fDataInicial.Size = new System.Drawing.Size(128, 29);
+            this.fDataInicial.TabIndex = 5;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.fDataFinal);
+            this.groupBox2.Location = new System.Drawing.Point(1123, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(134, 70);
+            this.groupBox2.TabIndex = 14;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Data Final";
+            // 
+            // fDataFinal
+            // 
+            this.fDataFinal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataFinal.Location = new System.Drawing.Point(3, 25);
+            this.fDataFinal.Name = "fDataFinal";
+            this.fDataFinal.Size = new System.Drawing.Size(128, 29);
+            this.fDataFinal.TabIndex = 5;
+            // 
             // WorkflowByDate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1291, 685);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dgvPessoalDisponivel);
             this.Controls.Add(this.plVgm);
             this.Controls.Add(this.dgvEscala);
@@ -252,6 +300,8 @@
             this.plVgm.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPessoalDisponivel)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -329,5 +379,9 @@
         private RadioButton opTodos;
         private RadioButton opDiurno;
         private DataGridView dgvPessoalDisponivel;
+        private GroupBox groupBox1;
+        private DateTimePicker fDataInicial;
+        private GroupBox groupBox2;
+        private DateTimePicker fDataFinal;
     }
 }

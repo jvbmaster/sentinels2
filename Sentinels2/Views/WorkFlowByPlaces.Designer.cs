@@ -42,6 +42,10 @@
             this.btAdd = new System.Windows.Forms.Button();
             this.gSubstituicoes = new System.Windows.Forms.GroupBox();
             this.lbSubsituicao = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fDataInicial = new System.Windows.Forms.DateTimePicker();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.fDataFinal = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaces)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).BeginInit();
@@ -49,6 +53,8 @@
             this.plVgm.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).BeginInit();
             this.gSubstituicoes.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvPlaces
@@ -105,7 +111,7 @@
             this.dgvPersons.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvPersons.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvPersons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPersons.Location = new System.Drawing.Point(923, 38);
+            this.dgvPersons.Location = new System.Drawing.Point(923, 116);
             this.dgvPersons.MultiSelect = false;
             this.dgvPersons.Name = "dgvPersons";
             this.dgvPersons.ReadOnly = true;
@@ -113,7 +119,7 @@
             this.dgvPersons.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvPersons.RowTemplate.Height = 25;
             this.dgvPersons.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPersons.Size = new System.Drawing.Size(352, 411);
+            this.dgvPersons.Size = new System.Drawing.Size(352, 333);
             this.dgvPersons.TabIndex = 3;
             this.dgvPersons.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseClick);
             this.dgvPersons.MouseCaptureChanged += new System.EventHandler(this.dgvPersons_MouseCaptureChanged);
@@ -239,12 +245,54 @@
             this.lbSubsituicao.TabIndex = 0;
             this.lbSubsituicao.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.fDataInicial);
+            this.groupBox1.Location = new System.Drawing.Point(961, 38);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(134, 70);
+            this.groupBox1.TabIndex = 16;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Data Ínicial";
+            // 
+            // fDataInicial
+            // 
+            this.fDataInicial.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataInicial.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataInicial.Location = new System.Drawing.Point(3, 25);
+            this.fDataInicial.Name = "fDataInicial";
+            this.fDataInicial.Size = new System.Drawing.Size(128, 29);
+            this.fDataInicial.TabIndex = 5;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.fDataFinal);
+            this.groupBox2.Location = new System.Drawing.Point(1101, 38);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(134, 70);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Data Final";
+            // 
+            // fDataFinal
+            // 
+            this.fDataFinal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fDataFinal.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.fDataFinal.Location = new System.Drawing.Point(3, 25);
+            this.fDataFinal.Name = "fDataFinal";
+            this.fDataFinal.Size = new System.Drawing.Size(128, 29);
+            this.fDataFinal.TabIndex = 5;
+            // 
             // WorkFlowByPlaces
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1369, 656);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gSubstituicoes);
             this.Controls.Add(this.btAdd);
             this.Controls.Add(this.opNoturno);
@@ -269,6 +317,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlVgm)).EndInit();
             this.gSubstituicoes.ResumeLayout(false);
             this.gSubstituicoes.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -320,5 +370,9 @@
         private Button btAdd;
         private GroupBox gSubstituicoes;
         private Label lbSubsituicao;
+        private GroupBox groupBox1;
+        private DateTimePicker fDataInicial;
+        private GroupBox groupBox2;
+        private DateTimePicker fDataFinal;
     }
 }

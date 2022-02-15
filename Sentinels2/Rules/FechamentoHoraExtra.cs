@@ -68,50 +68,80 @@ namespace Sentinels2.Rules
 
             if (VerificarDiasEspeciais(extra) == true)
             {
+                // horas 100 %
                 switch (extra.Parte)
                 {
-                    case 0:
+                    case 0: // plantão diúrno
                         {
                             extra.PlantaoDiurna = (extra.Saida - extra.Entrada).Duration();
                             break;
                         }
-                    case 1:
+                    case 1: // parte 1 de plantão noturno
                         {
-                            // não suporta entrada posterior ao ínicio do horário noturno e saida antes do fim do horário noturno
                             extra.PlantaoDiurna = (horaNoturnaInicio - extra.Entrada).Duration();
-                            extra.PlantaoNoturna = (extra.Saida - horaNoturnaInicio).Duration();
+                            if(extra.Entrada >= horaNoturnaInicio)
+                            {
+                                extra.PlantaoDiurna = new TimeSpan(0,0,0);
+                                extra.PlantaoNoturna = (extra.Saida - extra.Entrada).Duration();
+                            }
+                            else
+                            {
+                                extra.PlantaoNoturna = (extra.Saida - horaNoturnaInicio).Duration();
+                            }
                             break;
                         }
-                    case 2:
+                    case 2: // parte 2 de plantão noturno
                         {
-                            // não suporta entrada posterior ao ínicio do horário noturno e saida antes do fim do horário noturno
-                            extra.PlantaoNoturna = (horaNoturnaFim - extra.Entrada).Duration();
-                            extra.PlantaoDiurna = (extra.Saida - horaNoturnaFim).Duration();
+                            if(extra.Saida < horaNoturnaFim)
+                            {
+                                extra.PlantaoNoturna = (extra.Saida - extra.Entrada).Duration();
+                                extra.PlantaoDiurna = new TimeSpan(0,0,0);
+                            }
+                            else
+                            {
+                                extra.PlantaoNoturna = (horaNoturnaFim - extra.Entrada).Duration();
+                                extra.PlantaoDiurna = (extra.Saida - horaNoturnaFim).Duration();
+                            }
                             break;
                         }
                 }
             }
-            else
+            else 
             {
+                // horas 50 %
                 switch (extra.Parte)
                 {
-                    case 0:
+                    case 0: // plantão diúrno
                         {
                             extra.SimplesDiurna = (extra.Saida - extra.Entrada).Duration();
                             break;
                         }
-                    case 1:
+                    case 1: // parte 1 de plantão noturno
                         {
-                            // não suporta entrada posterior ao ínicio do horário noturno e saida antes do fim do horário noturno
                             extra.SimplesDiurna = (horaNoturnaInicio - extra.Entrada).Duration();
-                            extra.SimplesNoturna = (extra.Saida - horaNoturnaInicio).Duration();
+                            if(extra.Entrada >= horaNoturnaInicio)
+                            {
+                                extra.SimplesDiurna = new TimeSpan(0,0,0);
+                                extra.SimplesNoturna = (extra.Saida - extra.Entrada);
+                            }
+                            else
+                            {
+                                extra.SimplesNoturna = (extra.Saida - horaNoturnaInicio).Duration();
+                            }
                             break;
                         }
-                    case 2:
+                    case 2: // parte 2 de plantão noturno
                         {
-                            // não suporta entrada posterior ao ínicio do horário noturno e saida antes do fim do horário noturno
-                            extra.SimplesNoturna = (horaNoturnaFim - extra.Entrada).Duration();
-                            extra.SimplesDiurna = (extra.Saida - horaNoturnaFim).Duration();
+                            if (extra.Saida < horaNoturnaFim)
+                            {
+                                extra.SimplesNoturna = (extra.Saida - extra.Entrada).Duration();
+                                extra.SimplesDiurna = new TimeSpan(0,0,0);
+                            }
+                            else
+                            {
+                                extra.SimplesNoturna = (horaNoturnaFim - extra.Entrada).Duration();
+                                extra.SimplesDiurna = (extra.Saida - horaNoturnaFim).Duration();
+                            }
                             break;
                         }
                 }

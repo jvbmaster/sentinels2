@@ -478,7 +478,16 @@ namespace Sentinels2
                 }
                 MessageBox.Show("Nenhuma quebra!");
 
-                dgvDataPerson.DataSource = fechamento.convocacao.HorasRealizadas.ToList();
+                dgvDataPerson.DataSource = fechamento.convocacao.HorasRealizadas.Select(p => new {
+                    Data = p.Data.ToString("dd/MM"),
+                    Horario = $"{p.Entrada.ToString("HH:mm")} às {p.Saida.ToString("HH:mm")}",
+                    p.SimplesDiurna,
+                    p.SimplesNoturna,
+                    p.PlantaoDiurna,
+                    p.PlantaoNoturna,
+                    p.Justificativa
+                }).ToList();
+
             }
             catch(Exception ex)
             {

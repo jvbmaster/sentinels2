@@ -8,15 +8,15 @@ namespace Sentinels2.Models
 {
     internal class HoraExtra
     {
-        public string Parte { get; set; }
-        public bool IsPlantao { get; set; }
+        public int EscalaOS { get; set; }
+        public int Parte { get; set; }
         public DateTime Data { get; set; }
-        public TimeSpan Entrada { get; set; }
-        public TimeSpan Saida { get; set; }
-        public double HSimplesDia { get; set; }
-        public double HSimplesNoite { get; set; }
-        public double HPlantaoDia { get; set; }
-        public double HPlantaoNoite { get; set; }
+        public DateTime Entrada { get; set; }
+        public DateTime Saida { get; set; }
+        public TimeSpan SimplesDiurna { get; set; }
+        public TimeSpan SimplesNoturna { get; set; }
+        public TimeSpan PlantaoDiurna { get; set; }
+        public TimeSpan PlantaoNoturna { get; set; }
         public string Justificativa { get; set; }
     }
 }

@@ -46,6 +46,7 @@
             this.fDataInicial = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.fDataFinal = new System.Windows.Forms.DateTimePicker();
+            this.todosVigias = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPlaces)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPersons)).BeginInit();
@@ -111,7 +112,7 @@
             this.dgvPersons.BackgroundColor = System.Drawing.Color.WhiteSmoke;
             this.dgvPersons.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvPersons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPersons.Location = new System.Drawing.Point(923, 116);
+            this.dgvPersons.Location = new System.Drawing.Point(923, 160);
             this.dgvPersons.MultiSelect = false;
             this.dgvPersons.Name = "dgvPersons";
             this.dgvPersons.ReadOnly = true;
@@ -119,7 +120,7 @@
             this.dgvPersons.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgvPersons.RowTemplate.Height = 25;
             this.dgvPersons.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPersons.Size = new System.Drawing.Size(352, 333);
+            this.dgvPersons.Size = new System.Drawing.Size(352, 289);
             this.dgvPersons.TabIndex = 3;
             this.dgvPersons.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgvPersons_MouseClick);
             this.dgvPersons.MouseCaptureChanged += new System.EventHandler(this.dgvPersons_MouseCaptureChanged);
@@ -285,12 +286,23 @@
             this.fDataFinal.Size = new System.Drawing.Size(128, 29);
             this.fDataFinal.TabIndex = 5;
             // 
+            // todosVigias
+            // 
+            this.todosVigias.AutoSize = true;
+            this.todosVigias.Location = new System.Drawing.Point(923, 129);
+            this.todosVigias.Name = "todosVigias";
+            this.todosVigias.Size = new System.Drawing.Size(171, 25);
+            this.todosVigias.TabIndex = 18;
+            this.todosVigias.Text = "Mostrar todos vigias";
+            this.todosVigias.UseVisualStyleBackColor = true;
+            // 
             // WorkFlowByPlaces
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1369, 656);
+            this.Controls.Add(this.todosVigias);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gSubstituicoes);
@@ -374,5 +386,6 @@
         private DateTimePicker fDataInicial;
         private GroupBox groupBox2;
         private DateTimePicker fDataFinal;
+        private CheckBox todosVigias;
     }
 }

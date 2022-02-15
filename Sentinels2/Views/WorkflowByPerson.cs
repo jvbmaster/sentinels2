@@ -10,6 +10,8 @@ namespace Sentinels2
     public partial class WorkflowByPerson : Form
     {
         private List<Vigia> vigias = VigiaCRUD.Get(p => p.Turno.Equals("N") || p.Turno.Equals("D")).ToList();
+        private List<Escala> extras = new List<Escala>();
+        private List<Afastamento> afastamentos = new List<Afastamento>();
         private Vigia vigia;
         private int modoExibicao = 0;
 
@@ -59,16 +61,18 @@ namespace Sentinels2
         {
             try
             {
-                dgvDataPerson.DataSource = AfastamentoCRUD.Get(p => p.Funcionario.Equals(vigia.Id) && (p.DataInicial >= fDataInicial.Value && p.DataFinal <= fDataFinal.Value))
-                    .Select(p => new {
-                        p.Id,
-                        Tipo = p.TipoAfastamento,
-                        Funcionário = p.Funcionario,
-                        Início = p.DataInicial.ToString("dd/MM/yyyy"),
-                        Fim = p.DataFinal.ToString("dd/MM/yyyy"),
-                        QTD = p.QuantidadeDias, 
-                        Referência = p.Referencia,
-                    }).ToList();
+                afastamentos = AfastamentoCRUD.Get(p => p.Funcionario.Equals(vigia.Id) && (p.DataInicial >= fDataInicial.Value && p.DataFinal <= fDataFinal.Value))
+                    .ToList();
+
+                dgvDataPerson.DataSource = afastamentos.Select(p => new {
+                    p.Id,
+                    Tipo = p.TipoAfastamento,
+                    Funcionário = p.Funcionario,
+                    Início = p.DataInicial.ToString("dd/MM/yyyy"),
+                    Fim = p.DataFinal.ToString("dd/MM/yyyy"),
+                    QTD = p.QuantidadeDias,
+                    Referência = p.Referencia,
+                }).ToList(); 
             }
             catch (Exception ex)
             {
@@ -81,8 +85,10 @@ namespace Sentinels2
         {
             try
             {
-                dgvDataPerson.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && p.TipoPagamento.Equals("EXTRA") && (p.Entrada >= fDataInicial.Value && p.Entrada <= fDataFinal.Value))
-                    .OrderBy(p => p.Data)
+                extras = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && p.TipoPagamento.Equals("EXTRA") && (p.Entrada >= fDataInicial.Value && p.Entrada <= fDataFinal.Value))
+                    .OrderBy(p => p.Data).ToList();
+
+                dgvDataPerson.DataSource = extras
                     .Select(p => new {
                         p.OS,
                         Data = p.Data.ToString("dd/MM/yyyy"),
@@ -91,8 +97,9 @@ namespace Sentinels2
                         Saída = p.Saida.ToString("HH:mm"),
                         Contabilização = p.TipoPagamento,
                         Substituindo = p.AfastamentoVGF
-                    })
-                    .ToList();
+                })
+                .ToList();
+
             }
             catch (Exception ex)
             {
@@ -458,6 +465,25 @@ namespace Sentinels2
         private void dgvPessoal_Click(object sender, EventArgs e)
         {
             LoadInfo();
+        }
+
+        private void btConvoc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FechamentoHoraExtra fechamento = new FechamentoHoraExtra(vigia, fDataInicial.Value, fDataFinal.Value);
+                foreach (var item in extras)
+                {
+                    fechamento.Analisar(item);
+                }
+                MessageBox.Show("Nenhuma quebra!");
+
+                dgvDataPerson.DataSource = fechamento.convocacao.HorasRealizadas.ToList();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"Oh, fézes!\n\n{ex.Message}");
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Sentinels2.Views
             {
                 patrimonio = PatrimonioCRUD.Find(p => p.Id.Equals(dgvPlaces.CurrentRow.Cells[0].Value));
 
-                var data = EscalaCRUD.Get(p => p.Patrimonio.Equals(patrimonio.Id)).OrderBy(p => p.Data);
+                var data = EscalaCRUD.Get(p => p.Patrimonio.Equals(patrimonio.Id)).OrderByDescending(p => p.Data);
                 var dataf = data.ToList();
 
                 switch (periodos)
@@ -225,7 +225,16 @@ namespace Sentinels2.Views
 
         private void dgvDates_MouseClick(object sender, MouseEventArgs e)
         {
-            VerificarDisponibilidade();
+            if(todosVigias.Checked == true)
+            {
+                dgvPersons.DataSource = VigiaCRUD.GetAll().OrderBy(p => p.Id).Select(p => new {
+                    TODOS = p.Id
+                }).ToList();
+            }
+            else
+            {
+                VerificarDisponibilidade();
+            }
             gSubstituicoes.Text = $"Substituição para {dgvDates.CurrentRow.Cells["Data"].Value}";
             afastamento = (int.Parse(dgvDates.CurrentRow.Cells["Substituição"].Value.ToString()) > 0) ? AfastamentoCRUD.Find(dgvDates.CurrentRow.Cells["Substituição"].Value) : null;
             lbSubsituicao.Text = (afastamento == null) ? "" : $"{afastamento.TipoAfastamento} de {afastamento.Funcionario}";
@@ -326,8 +335,11 @@ namespace Sentinels2.Views
             try
             {
                 int os = int.Parse(dgvDates.CurrentRow.Cells[0].Value.ToString());
-                // Chamar Editor
-                LoadDates();
+                EscalaCRUD.ObjectInstanceate = EscalaCRUD.Find(os);
+                if(new EditEscala().ShowDialog() == DialogResult.OK)
+                {
+                   LoadDates();
+                }
             }
             catch (Exception ex)
             {

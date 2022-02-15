@@ -27,7 +27,7 @@ namespace Sentinels2.Views
             try
             {
                 var data = (busca == "") 
-                    ? VigiaCRUD.GetAll().ToList() :
+                    ? VigiaCRUD.Get(p => p.Turno.Equals("N") || p.Turno.Equals("D")).ToList() :
                     VigiaCRUD.Get(p => p.Nome.Contains(busca)).ToList();
 
                 dataGridView1.DataSource = data.Select(p => new {

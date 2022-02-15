@@ -57,6 +57,7 @@ namespace Sentinels2
             this.btSend = new System.Windows.Forms.Button();
             this.btnRport = new System.Windows.Forms.Button();
             this.dgvDataPerson = new System.Windows.Forms.DataGridView();
+            this.btConvoc = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -236,6 +237,7 @@ namespace Sentinels2
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.Control;
+            this.panel3.Controls.Add(this.btConvoc);
             this.panel3.Controls.Add(this.groupBox1);
             this.panel3.Controls.Add(this.groupBox2);
             this.panel3.Controls.Add(this.opDiasTrabalhados);
@@ -366,6 +368,16 @@ namespace Sentinels2
             this.dgvDataPerson.TabIndex = 11;
             this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
             // 
+            // btConvoc
+            // 
+            this.btConvoc.Location = new System.Drawing.Point(453, 46);
+            this.btConvoc.Name = "btConvoc";
+            this.btConvoc.Size = new System.Drawing.Size(178, 39);
+            this.btConvoc.TabIndex = 7;
+            this.btConvoc.Text = "Gerar Convocação";
+            this.btConvoc.UseVisualStyleBackColor = true;
+            this.btConvoc.Click += new System.EventHandler(this.btConvoc_Click);
+            // 
             // WorkflowByPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -432,5 +444,6 @@ namespace Sentinels2
         private Button btFrequencia;
         private Button btnSendMsg;
         private Button btSend;
+        private Button btConvoc;
     }
 }

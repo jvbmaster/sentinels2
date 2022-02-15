@@ -2,48 +2,48 @@
 
 namespace Sentinels2.Rules
 {
-    internal class Convocacao
+    internal class ConvocacaoOrigin
     {
         public List<HoraExtra> ListaDeHoras { get; set; }
-        public double HSimplesDiaTotal { get; set; }
-        public double HSimplesNoiteTotal { get; set; }
-        public double HPlantaoDiaTotal { get; set; }
-        public double HPlantaoNoiteTotal { get; set; }
-
+        public TimeSpan HSimplesDiaTotal { get; set; }
+        public TimeSpan HSimplesNoiteTotal { get; set; }
+        public TimeSpan HPlantaoDiaTotal { get; set; }
+        public TimeSpan HPlantaoNoiteTotal { get; set; }
+        /*
         public void Analisar(Escala escala)
         {
             if(escala.Saida.Day > escala.Entrada.Day)
             {
-                HoraExtra parteA = new HoraExtra();
-                HoraExtra parteB = new HoraExtra();
-
-                parteA.Parte = "A";
-                parteA.Data = escala.Data;
-                parteA.Entrada = TimeSpan.Parse(escala.Entrada.ToShortTimeString());
-                parteA.Saida = new TimeSpan(0, 0, 0);
-                parteA.Justificativa = escala.Motivo;
-
-                parteB = parteA;
-                parteB.Parte = "B";
-                parteB.Data.AddDays(1);
-                parteB.Entrada = new TimeSpan(0,0,0);
-
-                SepararHoras(parteA);
-                SepararHoras(parteB);
-
-                ListaDeHoras.Add(parteA);
-                ListaDeHoras.Add(parteB);
+                //HoraExtra parteA = new HoraExtra();
+                //HoraExtra parteB = new HoraExtra();
+                //
+                //parteA.Parte = "A";
+                //parteA.Data = escala.Data;
+                //parteA.Entrada = DateTime.Parse(parteA.Data.Year, parteA.Data.escala.Entrada.ToShortTimeString());
+                //parteA.Saida = new TimeSpan(0, 0, 0);
+                //parteA.Justificativa = escala.Motivo;
+                //
+                //parteB = parteA;
+                //parteB.Parte = "B";
+                //parteB.Data.AddDays(1);
+                //parteB.Entrada = new TimeSpan(0,0,0);
+                //
+                //SepararHoras(parteA);
+                //SepararHoras(parteB);
+                //
+                //ListaDeHoras.Add(parteA);
+                //ListaDeHoras.Add(parteB);
             }
             else
             {
-                HoraExtra parteUnica = new HoraExtra();
-                parteUnica.Parte = "U";
-                parteUnica.Data = escala.Data;
-                parteUnica.Entrada = TimeSpan.Parse(escala.Entrada.ToShortTimeString());
-                parteUnica.Saida = TimeSpan.Parse(escala.Saida.ToShortTimeString());
-                parteUnica.Justificativa = escala.Motivo;
-                SepararHoras(parteUnica);
-                ListaDeHoras.Add(parteUnica);
+               // HoraExtra parteUnica = new HoraExtra();
+               // parteUnica.Parte = "U";
+               // parteUnica.Data = escala.Data;
+               // parteUnica.Entrada = TimeSpan.Parse(escala.Entrada.ToShortTimeString());
+               // parteUnica.Saida = TimeSpan.Parse(escala.Saida.ToShortTimeString());
+               // parteUnica.Justificativa = escala.Motivo;
+               // SepararHoras(parteUnica);
+               // ListaDeHoras.Add(parteUnica);
             }
         }
 
@@ -64,7 +64,10 @@ namespace Sentinels2.Rules
             return (data != null) ? true : false;
         }
 
-        private double CalcularDuracao(TimeSpan Entrada, TimeSpan Saida) => (Saida - Entrada).TotalHours;
+        private TimeSpan CalcularDuracao(DateTime entrada, DateTime saida)
+        {
+            return (saida - entrada).Duration();
+        }
 
         public int SepararHoras(HoraExtra extra)
         {
@@ -72,33 +75,33 @@ namespace Sentinels2.Rules
             {
                 case "A":
                     {
-                        TimeSpan noiteInicio = new TimeSpan(22,0,0);
-                        if (TiparHora(extra.Data)) // Se 100%
-                        {
-                            if(extra.Entrada < noiteInicio)
-                            {
-                                extra.HPlantaoDia = CalcularDuracao(extra.Entrada, noiteInicio);
-                                extra.HPlantaoNoite = CalcularDuracao(noiteInicio, extra.Saida);
-                            }
-                            else
-                            {
-                                extra.HPlantaoDia = 0;
-                                extra.HPlantaoNoite = CalcularDuracao(extra.Entrada, extra.Saida);
-                            }
-                        }
-                        else // Se 50%
-                        {
-                            if (extra.Entrada < noiteInicio)
-                            {
-                                extra.HSimplesDia = CalcularDuracao(extra.Entrada, noiteInicio);
-                                extra.HSimplesNoite = CalcularDuracao(noiteInicio, extra.Saida);
-                            }
-                            else
-                            {
-                                extra.HSimplesDia = 0;
-                                extra.HSimplesNoite = CalcularDuracao(extra.Entrada, extra.Saida);
-                            }
-                        }
+                       // TimeSpan noiteInicio = new TimeSpan(22,0,0);
+                       // if (TiparHora(extra.Data)) // Se 100%
+                       // {
+                       //     if(extra.Entrada < noiteInicio)
+                       //     {
+                       //         extra.HPlantaoDia = CalcularDuracao(extra.Entrada, noiteInicio);
+                       //         extra.HPlantaoNoite = CalcularDuracao(noiteInicio, extra.Saida);
+                       //     }
+                       //     else
+                       //     {
+                       //         extra.HPlantaoDia = 0;
+                       //         extra.HPlantaoNoite = CalcularDuracao(extra.Entrada, extra.Saida);
+                       //     }
+                       // }
+                       // else // Se 50%
+                       // {
+                       //     if (extra.Entrada < noiteInicio)
+                       //     {
+                       //         extra.HSimplesDia = CalcularDuracao(extra.Entrada, noiteInicio);
+                       //         extra.HSimplesNoite = CalcularDuracao(noiteInicio, extra.Saida);
+                       //     }
+                       //     else
+                       //     {
+                       //         extra.HSimplesDia = 0;
+                       //         extra.HSimplesNoite = CalcularDuracao(extra.Entrada, extra.Saida);
+                       //     }
+                       // }
                         break;
                     }
                     case "B":
@@ -166,5 +169,6 @@ namespace Sentinels2.Rules
             }
             return 0;
         }
+        */
     }
 }

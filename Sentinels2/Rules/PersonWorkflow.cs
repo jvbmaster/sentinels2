@@ -12,8 +12,8 @@ namespace Sentinels2.Rules
     {
         public static List<Vigia> AvailableOnDate(DateTime date, string periodo = "A")
         {
-            List<Vigia> disponiveis = new List<Vigia>();
             List<Vigia> firsfilter = new List<Vigia>();
+            List<Vigia> disponiveis = new List<Vigia>();
 
             switch(periodo)
             {

@@ -22,18 +22,32 @@ namespace Sentinels2.Views
 
         private void HomeWindow_Load(object sender, EventArgs e)
         {
+            
+        }
+
+        private void calendar_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            CarregarDemanda();
+        }
+
+        private void CarregarDemanda()
+        {
             try
             {
-                //using (Context ctx = new Context())
-                //{
-                //    var data = ctx.Vigias.FromSqlRaw($"select * from Vigia").ToList();
-                //}   
-                dgvVigiasDisponiveis.DataSource = VigiaCRUD.Get(p => p.Turno.Equals("N") || p.Turno.Equals("D")).ToList();
+                dgvDemanda.DataSource = EscalaCRUD
+                    .Get(p => p.Data.Equals(calendar.SelectionStart))
+                    .Select(p => new {
+                        p.OS,
+                        Data = p.Data.ToString("dd/MM"),
+                        p.Patrimonio,
+                        Horário = $"{p.Entrada.ToString("HH:mm")} às {p.Saida.ToString("HH:mm")}",
+                        p.Vigia,
+                        p.TipoPagamento
+                    }).ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                dgvVigiasDisponiveis.DataSource = new List<Vigia>();
-                MessageBox.Show($"É aqui que fudeu!\n{ex.Message}");
+                MessageBox.Show($"{ex.Message}");
             }
         }
     }

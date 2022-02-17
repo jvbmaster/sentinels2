@@ -47,6 +47,7 @@ namespace Sentinels2
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgvPessoal = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btConvoc = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.fDataInicial = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -57,7 +58,6 @@ namespace Sentinels2
             this.btSend = new System.Windows.Forms.Button();
             this.btnRport = new System.Windows.Forms.Button();
             this.dgvDataPerson = new System.Windows.Forms.DataGridView();
-            this.btConvoc = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -251,6 +251,16 @@ namespace Sentinels2
             this.panel3.Size = new System.Drawing.Size(910, 91);
             this.panel3.TabIndex = 10;
             // 
+            // btConvoc
+            // 
+            this.btConvoc.Location = new System.Drawing.Point(397, 33);
+            this.btConvoc.Name = "btConvoc";
+            this.btConvoc.Size = new System.Drawing.Size(129, 41);
+            this.btConvoc.TabIndex = 7;
+            this.btConvoc.Text = "Fechamento";
+            this.btConvoc.UseVisualStyleBackColor = true;
+            this.btConvoc.Click += new System.EventHandler(this.btConvoc_Click);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.fDataInicial);
@@ -269,6 +279,7 @@ namespace Sentinels2
             this.fDataInicial.Name = "fDataInicial";
             this.fDataInicial.Size = new System.Drawing.Size(128, 33);
             this.fDataInicial.TabIndex = 5;
+            this.fDataInicial.Value = new System.DateTime(2022, 1, 16, 6, 37, 0, 0);
             // 
             // groupBox2
             // 
@@ -288,6 +299,7 @@ namespace Sentinels2
             this.fDataFinal.Name = "fDataFinal";
             this.fDataFinal.Size = new System.Drawing.Size(128, 33);
             this.fDataFinal.TabIndex = 5;
+            this.fDataFinal.Value = new System.DateTime(2022, 2, 15, 6, 37, 0, 0);
             // 
             // opDiasTrabalhados
             // 
@@ -328,11 +340,11 @@ namespace Sentinels2
             // btSend
             // 
             this.btSend.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.btSend.Location = new System.Drawing.Point(805, 46);
+            this.btSend.Location = new System.Drawing.Point(790, 46);
             this.btSend.Name = "btSend";
-            this.btSend.Size = new System.Drawing.Size(93, 41);
+            this.btSend.Size = new System.Drawing.Size(108, 41);
             this.btSend.TabIndex = 3;
-            this.btSend.Text = "Enviar";
+            this.btSend.Text = "Comunicar";
             this.btSend.UseVisualStyleBackColor = false;
             this.btSend.Click += new System.EventHandler(this.btSend_Click);
             // 
@@ -367,16 +379,6 @@ namespace Sentinels2
             this.dgvDataPerson.Size = new System.Drawing.Size(910, 139);
             this.dgvDataPerson.TabIndex = 11;
             this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
-            // 
-            // btConvoc
-            // 
-            this.btConvoc.Location = new System.Drawing.Point(453, 46);
-            this.btConvoc.Name = "btConvoc";
-            this.btConvoc.Size = new System.Drawing.Size(178, 39);
-            this.btConvoc.TabIndex = 7;
-            this.btConvoc.Text = "Gerar Convocação";
-            this.btConvoc.UseVisualStyleBackColor = true;
-            this.btConvoc.Click += new System.EventHandler(this.btConvoc_Click);
             // 
             // WorkflowByPerson
             // 

@@ -22,5 +22,16 @@ namespace Sentinels2.Models
         {
             HorasRealizadas = new List<HoraExtra>();
         }
+
+        public void Totalizar()
+        {
+            foreach (var item in HorasRealizadas)
+            {
+                SimplesDiaTotal += item.SimplesDiurna;
+                SimplesNoiteTotal += item.SimplesNoturna;
+                PlantaoDiaTotal += item.PlantaoDiurna;
+                PlantaoNoiteTotal += item.PlantaoNoturna;
+            }
+        }
     }
 }

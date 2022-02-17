@@ -11,6 +11,7 @@ namespace Sentinels2
     {
         private List<Vigia> vigias = VigiaCRUD.Get(p => p.Turno.Equals("N") || p.Turno.Equals("D")).ToList();
         private List<Escala> extras = new List<Escala>();
+        private List<Escala> escalaFixa = new List<Escala>();
         private List<Afastamento> afastamentos = new List<Afastamento>();
         private Vigia vigia;
         private int modoExibicao = 0;
@@ -112,8 +113,11 @@ namespace Sentinels2
         {
             try
             {
-                dgvDataPerson.DataSource = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && (p.Entrada >= fDataInicial.Value && p.Entrada <= fDataFinal.Value))
+                escalaFixa = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && (p.Entrada >= fDataInicial.Value && p.Entrada <= fDataFinal.Value) && p.TipoPagamento.Equals("NORMAL"))
                     .OrderBy(p => p.Data)
+                    
+                    .ToList();
+                dgvDataPerson.DataSource = escalaFixa
                     .Select(p => new {
                         p.OS,
                         Data = p.Data.ToString("dd/MM/yyyy"),
@@ -122,8 +126,7 @@ namespace Sentinels2
                         Saída = p.Saida.ToString("HH:mm"),
                         Contabilização = p.TipoPagamento,
                         Substituindo = p.AfastamentoVGF
-                    })
-                    .ToList();
+                    }).ToList();
             }
             catch (Exception ex)
             {
@@ -207,18 +210,6 @@ namespace Sentinels2
 
         private void WorkflowByPerson_Load(object sender, EventArgs e)
         {
-            try
-            {
-               int m = DateTime.Now.Month;
-               
-               fDataInicial.Value = DateTime.Parse($"{DateTime.Now.Year}-{DateTime.Now.Month}-{16}");
-               fDataFinal.Value = fDataInicial.Value.AddDays(DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month-1));
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"Falha ao selecionar intervalo de datas\n{ex.Message}");
-            }
-            
             LoadVigias();
         }
 
@@ -469,6 +460,17 @@ namespace Sentinels2
 
         private void btConvoc_Click(object sender, EventArgs e)
         {
+            
+            switch (modoExibicao)
+            {
+                case 0: FecharFrequencia(); break;
+                case 1: FecharHorasExtra(); break;
+            }
+            
+        }
+
+        public void FecharHorasExtra()
+        {
             try
             {
                 FechamentoHoraExtra fechamento = new FechamentoHoraExtra(vigia, fDataInicial.Value, fDataFinal.Value);
@@ -478,7 +480,7 @@ namespace Sentinels2
                 }
                 MessageBox.Show("Nenhuma quebra!");
 
-                dgvDataPerson.DataSource = fechamento.convocacao.HorasRealizadas.Select(p => new {
+                dgvDataPerson.DataSource = fechamento.Convocacao.HorasRealizadas.Select(p => new {
                     Data = p.Data.ToString("dd/MM"),
                     Horario = $"{p.Entrada.ToString("HH:mm")} às {p.Saida.ToString("HH:mm")}",
                     p.SimplesDiurna,
@@ -488,8 +490,33 @@ namespace Sentinels2
                     p.Justificativa
                 }).ToList();
 
+                if (MessageBox.Show("Podemos prosseguir para a impressão do documento ?", "Atenção", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Relatorios r = new Relatorios();
+                    r.GerarConvocacao(fechamento);
+                }
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Oh, fézes!\n\n{ex.Message}");
+            }
+        }
+
+        public void FecharFrequencia()
+        {
+            LoadHorasTrabalhadas();
+            LoadAfastamentos();
+            try
+            {
+                Relatorios r = new Relatorios();
+                r.FecharFolhaFrequencia(vigia, afastamentos, escalaFixa);
+
+                ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
+                process.Arguments = $"{Relatorios.filenametosave}.docx";
+                Process.Start(process);
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show($"Oh, fézes!\n\n{ex.Message}");
             }

@@ -4,15 +4,20 @@ namespace Sentinels2.Rules
 {
     internal class FechamentoHoraExtra : IDisposable
     {
-        public Convocacao convocacao { get; set; }
+        public Convocacao Convocacao { get; set; }
 
         public FechamentoHoraExtra(Vigia vigia, DateTime inicio, DateTime fim)
         {
-            convocacao = new Convocacao();
-            convocacao.Funcionario = vigia;
-            convocacao.DataDocumento = DateTime.Now;
-            convocacao.DataInicial = inicio;
-            convocacao.DataFinal = fim;
+            Convocacao = new Convocacao();
+            Convocacao.Funcionario = vigia;
+            Convocacao.DataDocumento = DateTime.Now;
+            Convocacao.DataInicial = inicio;
+            Convocacao.DataFinal = fim;
+            
+            Convocacao.SimplesDiaTotal = new TimeSpan(0, 0, 0);
+            Convocacao.SimplesNoiteTotal = new TimeSpan(0, 0, 0);
+            Convocacao.PlantaoDiaTotal = new TimeSpan(0, 0, 0);
+            Convocacao.PlantaoNoiteTotal = new TimeSpan(0, 0, 0);
         }
 
         public void Analisar(Escala escala)
@@ -27,10 +32,8 @@ namespace Sentinels2.Rules
                 var auxDate = escala.Saida; // apenas para facilitar a manutencao do codigo
                 parteA.Saida = new DateTime(auxDate.Year, auxDate.Month, auxDate.Day, 0, 0, 0);
                 parteA.Justificativa = $"{escala.Motivo} em {escala.Patrimonio}";
-                convocacao.HorasRealizadas.Add(Calcular(parteA));
-
-                // test
-               // MessageBox.Show($"{parteA.Parte} - {parteA.EscalaOS} {parteA.Entrada} {parteA.Saida}");
+                var auxA = Calcular(parteA);
+                Convocacao.HorasRealizadas.Add(auxA);
 
                 var parteB = new HoraExtra();
                 parteB.Parte = 2;
@@ -39,11 +42,8 @@ namespace Sentinels2.Rules
                 parteB.Entrada = parteA.Saida;
                 parteB.Saida = escala.Saida;
                 parteB.Justificativa = $"{escala.Motivo} em {escala.Patrimonio}";
-                convocacao.HorasRealizadas.Add(Calcular(parteB));
-
-                //test
-               // MessageBox.Show($"{parteB.Parte} - {parteB.EscalaOS} {parteB.Entrada} {parteB.Saida}");
-
+                var auxB = Calcular(parteB);
+                Convocacao.HorasRealizadas.Add(auxB);
             }
             else
             {
@@ -54,10 +54,8 @@ namespace Sentinels2.Rules
                 unica.Entrada = escala.Entrada;
                 unica.Saida = escala.Saida;
                 unica.Justificativa = $"{escala.Motivo} em {escala.Patrimonio}";
-                convocacao.HorasRealizadas.Add(Calcular(unica));
-
-                //MessageBox.Show($"{unica.Parte} - {unica.EscalaOS} {unica.Entrada} {unica.Saida}");
-
+                var auxU = Calcular(unica);
+                Convocacao.HorasRealizadas.Add(auxU);
             }
         }
 
@@ -79,7 +77,8 @@ namespace Sentinels2.Rules
                     case 1: // parte 1 de plantão noturno
                         {
                             extra.PlantaoDiurna = (horaNoturnaInicio - extra.Entrada).Duration();
-                            if(extra.Entrada >= horaNoturnaInicio)
+
+                            if (extra.Entrada >= horaNoturnaInicio)
                             {
                                 extra.PlantaoDiurna = new TimeSpan(0,0,0);
                                 extra.PlantaoNoturna = (extra.Saida - extra.Entrada).Duration();
@@ -96,6 +95,7 @@ namespace Sentinels2.Rules
                             {
                                 extra.PlantaoNoturna = (extra.Saida - extra.Entrada).Duration();
                                 extra.PlantaoDiurna = new TimeSpan(0,0,0);
+
                             }
                             else
                             {
@@ -119,7 +119,8 @@ namespace Sentinels2.Rules
                     case 1: // parte 1 de plantão noturno
                         {
                             extra.SimplesDiurna = (horaNoturnaInicio - extra.Entrada).Duration();
-                            if(extra.Entrada >= horaNoturnaInicio)
+
+                            if (extra.Entrada >= horaNoturnaInicio)
                             {
                                 extra.SimplesDiurna = new TimeSpan(0,0,0);
                                 extra.SimplesNoturna = (extra.Saida - extra.Entrada);
@@ -157,6 +158,7 @@ namespace Sentinels2.Rules
             }
             return false;
         }
+
         public void Dispose()
         {
            // GC.SuppressFinalize(this);

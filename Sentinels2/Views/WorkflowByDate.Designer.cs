@@ -58,10 +58,10 @@
             // calendar
             // 
             this.calendar.BackColor = System.Drawing.Color.Black;
-            this.calendar.CalendarDimensions = new System.Drawing.Size(1, 3);
+            this.calendar.FirstDayOfWeek = System.Windows.Forms.Day.Monday;
             this.calendar.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.calendar.ForeColor = System.Drawing.Color.Silver;
-            this.calendar.Location = new System.Drawing.Point(10, 85);
+            this.calendar.Location = new System.Drawing.Point(10, 92);
             this.calendar.Margin = new System.Windows.Forms.Padding(12, 10, 12, 10);
             this.calendar.MaxSelectionCount = 365;
             this.calendar.Name = "calendar";
@@ -145,7 +145,7 @@
             // opDiurno
             // 
             this.opDiurno.AutoSize = true;
-            this.opDiurno.Location = new System.Drawing.Point(148, 25);
+            this.opDiurno.Location = new System.Drawing.Point(148, 27);
             this.opDiurno.Name = "opDiurno";
             this.opDiurno.Size = new System.Drawing.Size(76, 25);
             this.opDiurno.TabIndex = 3;

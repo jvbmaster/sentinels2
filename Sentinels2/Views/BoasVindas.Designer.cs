@@ -40,6 +40,7 @@
             this.toolStripSplitButton2 = new System.Windows.Forms.ToolStripSplitButton();
             this.preferênciasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gerenteDeDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btHome = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,6 +48,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Controls.Add(this.btHome);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.button1);
@@ -178,6 +180,26 @@
             this.gerenteDeDatabaseToolStripMenuItem.Text = "Gerente de Database";
             this.gerenteDeDatabaseToolStripMenuItem.Click += new System.EventHandler(this.gerenteDeDatabaseToolStripMenuItem_Click);
             // 
+            // btHome
+            // 
+            this.btHome.AutoEllipsis = true;
+            this.btHome.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btHome.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btHome.FlatAppearance.BorderSize = 0;
+            this.btHome.FlatAppearance.CheckedBackColor = System.Drawing.Color.MidnightBlue;
+            this.btHome.FlatAppearance.MouseDownBackColor = System.Drawing.Color.RoyalBlue;
+            this.btHome.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Orange;
+            this.btHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btHome.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btHome.ForeColor = System.Drawing.Color.DimGray;
+            this.btHome.Location = new System.Drawing.Point(875, 25);
+            this.btHome.Name = "btHome";
+            this.btHome.Size = new System.Drawing.Size(98, 35);
+            this.btHome.TabIndex = 1;
+            this.btHome.Text = "Home";
+            this.btHome.UseVisualStyleBackColor = true;
+            this.btHome.Click += new System.EventHandler(this.btHome_Click);
+            // 
             // BoasVindas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -211,5 +233,6 @@
         private ToolStripSplitButton toolStripSplitButton2;
         private ToolStripMenuItem preferênciasToolStripMenuItem1;
         private ToolStripMenuItem gerenteDeDatabaseToolStripMenuItem;
+        private Button btHome;
     }
 }

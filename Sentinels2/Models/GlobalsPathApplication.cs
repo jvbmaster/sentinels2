@@ -6,7 +6,8 @@ namespace Sentinels2.Models
     {
         public string DatabasePath { get; set; }
 
-        public string OfficeApplicationPath { get; set; }   
+        public string OfficeApplicationPath { get; set; }
+        public string Output { get; set; }
 
         public void Dispose()
         {

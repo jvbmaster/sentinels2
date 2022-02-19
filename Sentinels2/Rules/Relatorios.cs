@@ -257,12 +257,6 @@ namespace Sentinels2.Rules
             int diasTrabalhados = escalaFixa.Count();
             int horasTrabalhadas = diasTrabalhados * 12;
             int jornadaExcedente = (horasTrabalhadas / 40) * 2; 
-           // int jornadaSemanal = (horasTrabalhadas/40) * 2;
-           // jornadaExcedente = jornadaSemanal;
-           // for (int i = 0; i < jornadaSemanal; i++)
-           // {
-           //     jornadaExcedente += 2;
-           // }
 
             foreach (var item in listaAfastamentos)
             {
@@ -291,64 +285,60 @@ namespace Sentinels2.Rules
                 doc.ReplaceText("${cod6_qtd}", cod6qtd);
                 doc.ReplaceText("${cod24}", cod24check);
                 doc.ReplaceText("${afastamentos}", afastamentos.ToString());
-                filenametosave = $"Relatorios/fechamento/{vigia.Nome}.docx";
+                filenametosave = $"{GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").Output}\\{vigia.Nome}.docx";
                 doc.SaveAs(filenametosave);
             }
         }
 
         public void GerarConvocacao(FechamentoHoraExtra fechamento)
         {
-            Convocacao convocacao = new Convocacao();
-            convocacao = fechamento.Convocacao;
+            var convocacao = fechamento.Covocacao;
             using (var doc = DocX.Load("Templates/TConvocacao.docx"))
             {
-                doc.ReplaceText("${data_doc}", DateTime.Now.ToString("dd/MM/yyyy"));
-                doc.ReplaceText("${proprietario}", "Claúdio Manoel da Costa Franco Pereira");
-                doc.ReplaceText("${carimbo}", "Claúdio Manoel da Costa Franco Pereira");
                 doc.ReplaceText("${periodo}", $"{convocacao.DataInicial.ToString("dd/MM/yyyy")} à {convocacao.DataFinal.ToString("dd/MM/yyyy")}");
                 doc.ReplaceText("${matricula}", convocacao.Funcionario.Matricula);
                 doc.ReplaceText("${funcionario}", convocacao.Funcionario.Nome);
                 doc.ReplaceText("${cargo}", convocacao.Funcionario.Cargo);
+                doc.ReplaceText("${data_doc}", DateTime.Now.ToString("dd/MM/yyyy"));
 
                 // Horas
-                int i = 0;
-                foreach (var item in convocacao.HorasRealizadas)
-                {
-                    i++; // incrementa numero da linha no documento
-                    
-                    doc.ReplaceText($"DT{i}", item.Data.ToString("dd/MM"));
-                    doc.ReplaceText($"HR{i}", $"{item.Entrada.ToString("HH:mm")} às {item.Saida.ToString("HH:mm")}");
-                    doc.ReplaceText($"SD{i}", $"{item.SimplesDiurna.Hours.ToString().PadLeft(2,'0')}:{item.SimplesDiurna.Minutes.ToString().PadLeft(2, '0')}");
-                    doc.ReplaceText($"SN{i}", $"{item.SimplesNoturna.Hours.ToString().PadLeft(2, '0')}:{item.SimplesNoturna.Minutes.ToString().PadLeft(2, '0')}");
-                    doc.ReplaceText($"PD{i}", $"{item.PlantaoDiurna.Hours.ToString().PadLeft(2, '0')}:{item.PlantaoDiurna.Minutes.ToString().PadLeft(2, '0')}");
-                    doc.ReplaceText($"PN{i}", $"{item.PlantaoNoturna.Hours.ToString().PadLeft(2, '0')}:{item.PlantaoNoturna.Minutes.ToString().PadLeft(2, '0')}");
-                    doc.ReplaceText($"JS{i}", $"{item.Justificativa}");
-                }
+                HoraExtra ?item = new HoraExtra();
+                int nreg = convocacao.HorasRealizadas.Count();
 
-                //Limpa linhas remanescentes
-
-                while (i < 18)
+                for (int linhas = 1; linhas < 19; linhas++)
                 {
-                    doc.ReplaceText($"DT{i}", " ");
-                    doc.ReplaceText($"HR{i}", " ");
-                    doc.ReplaceText($"SD{i}", " ");
-                    doc.ReplaceText($"SN{i}", " ");
-                    doc.ReplaceText($"PD{i}", " ");
-                    doc.ReplaceText($"PN{i}", " ");
-                    doc.ReplaceText($"JS{i}", " ");
-                    i++;
+                    if (linhas < (nreg+1))
+                    {
+                        item = convocacao.HorasRealizadas[linhas - 1];
+
+                        doc.ReplaceText($"DT{linhas}_", item.Data.ToString("dd/MM"));
+                        doc.ReplaceText($"HR{linhas}_", $"{item.Entrada.ToString("HH:mm")} às {item.Saida.ToString("HH:mm")}");
+                        doc.ReplaceText($"SD{linhas}_", (item.SimplesDiurna != new TimeSpan(0,0,0)) ? $"{item.SimplesDiurna.Hours.ToString().PadLeft(2,'0')}:{item.SimplesDiurna.Minutes.ToString().PadLeft(2, '0')}" : " ");
+                        doc.ReplaceText($"SN{linhas}_", (item.SimplesNoturna != new TimeSpan(0,0,0)) ? $"{item.SimplesNoturna.Hours.ToString().PadLeft(2, '0')}:{item.SimplesNoturna.Minutes.ToString().PadLeft(2, '0')}" : " ");
+                        doc.ReplaceText($"PD{linhas}_", (item.PlantaoDiurna != new TimeSpan(0,0,0)) ? $"{item.PlantaoDiurna.Hours.ToString().PadLeft(2, '0')}:{item.PlantaoDiurna.Minutes.ToString().PadLeft(2, '0')}" : " ");
+                        doc.ReplaceText($"PN{linhas}_", (item.PlantaoNoturna != new TimeSpan(0,0,0)) ? $"{item.PlantaoNoturna.Hours.ToString().PadLeft(2, '0')}:{item.PlantaoNoturna.Minutes.ToString().PadLeft(2, '0')}" : " ");
+                        doc.ReplaceText($"JS{linhas}_", $"{item.Justificativa}");
+                    }
+                    else
+                    {
+                        // loop sobre o número de linhas continua normalmente
+                        doc.ReplaceText($"DT{linhas}_", " ");
+                        doc.ReplaceText($"HR{linhas}_", " ");
+                        doc.ReplaceText($"SD{linhas}_", " ");
+                        doc.ReplaceText($"SN{linhas}_", " ");
+                        doc.ReplaceText($"PD{linhas}_", " ");
+                        doc.ReplaceText($"PN{linhas}_", " ");
+                        doc.ReplaceText($"JS{linhas}_", " ");
+                    }
                 }
                 // Adiciona totais
+                doc.ReplaceText($"TSD", convocacao.SimplesDiaTotal.ToString().PadLeft(2, '0'));
+                doc.ReplaceText($"TSN", convocacao.SimplesNoiteTotal.ToString().PadLeft(2, '0'));
+                doc.ReplaceText($"TPD", convocacao.PlantaoDiaTotal.ToString().PadLeft(2, '0'));
+                doc.ReplaceText($"TPN", convocacao.PlantaoNoiteTotal.ToString().PadLeft(2, '0'));
 
-                convocacao.Totalizar();
-
-                doc.ReplaceText($"TSD", convocacao.SimplesDiaTotal.ToString());
-                doc.ReplaceText($"TSN", convocacao.SimplesNoiteTotal.ToString());
-                doc.ReplaceText($"TPD", convocacao.PlantaoDiaTotal.ToString());
-                doc.ReplaceText($"TPN", convocacao.PlantaoNoiteTotal.ToString());
-                //
-
-                filenametosave = $"Relatorios/convoc/{convocacao.DataInicial.Month}-{convocacao.Funcionario.Nome}";
+                // Persistência do arquivo para impressão
+                filenametosave = $"{GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").Output}\\COVOC_{convocacao.DataInicial.Month}-{convocacao.Funcionario.Nome}";
                 doc.SaveAs(filenametosave);
             }
         }

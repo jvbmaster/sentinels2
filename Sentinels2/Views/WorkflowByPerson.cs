@@ -86,8 +86,8 @@ namespace Sentinels2
         {
             try
             {
-                extras = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && p.TipoPagamento.Equals("EXTRA") && (p.Entrada >= fDataInicial.Value && p.Entrada <= fDataFinal.Value))
-                    .OrderBy(p => p.Data).ToList();
+                extras = EscalaCRUD.Get(p => p.Vigia.Equals(vigia.Id) && p.TipoPagamento.Equals("EXTRA") && (p.Entrada > fDataInicial.Value.AddDays(-1) && p.Saida < fDataFinal.Value.AddDays(1)))
+                    .OrderBy(p => p.Data).OrderBy(p => p.Entrada).ToList();
 
                 dgvDataPerson.DataSource = extras
                     .Select(p => new {
@@ -96,6 +96,7 @@ namespace Sentinels2
                         Dia = p.Data.ToString("ddd", new CultureInfo("pt-BR")).ToUpper(),
                         Entrada = p.Entrada.ToString("HH:mm"),
                         Saída = p.Saida.ToString("HH:mm"),
+                        Local = p.Patrimonio,
                         Contabilização = p.TipoPagamento,
                         Substituindo = p.AfastamentoVGF
                 })
@@ -474,33 +475,45 @@ namespace Sentinels2
             try
             {
                 FechamentoHoraExtra fechamento = new FechamentoHoraExtra(vigia, fDataInicial.Value, fDataFinal.Value);
+                
                 foreach (var item in extras)
                 {
                     fechamento.Analisar(item);
                 }
-                MessageBox.Show("Nenhuma quebra!");
-
-                dgvDataPerson.DataSource = fechamento.Convocacao.HorasRealizadas.Select(p => new {
+                
+                dgvDataPerson.DataSource = fechamento.Covocacao.HorasRealizadas
+                .Select(p => new {
                     Data = p.Data.ToString("dd/MM"),
                     Horario = $"{p.Entrada.ToString("HH:mm")} às {p.Saida.ToString("HH:mm")}",
-                    p.SimplesDiurna,
-                    p.SimplesNoturna,
-                    p.PlantaoDiurna,
-                    p.PlantaoNoturna,
+                    Simples_Diúrna = p.SimplesDiurna.ToString(@"hh\:mm"),
+                    Simples_Noturna = p.SimplesNoturna.ToString(@"hh\:mm"),
+                    Plantão_Diúrna = p.PlantaoDiurna.ToString(@"hh\:mm"),
+                    Plantão_Noturna = p.PlantaoNoturna.ToString(@"hh\:mm"),
                     p.Justificativa
                 }).ToList();
 
-                if (MessageBox.Show("Podemos prosseguir para a impressão do documento ?", "Atenção", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Podemos prosseguir para a impressão do documento ?", 
+                    "Atenção", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Relatorios r = new Relatorios();
                     r.GerarConvocacao(fechamento);
+                    MessageBox.Show("Cool");
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Oh, fézes!\n\n{ex.Message}");
             }
+            //try
+            //{
+            //    ProcessStartInfo process = new ProcessStartInfo(GlobalsPathApplication.ReaderFileJSON("Globals\\userconfig.json").OfficeApplicationPath);
+            //    process.Arguments = $"{Relatorios.filenametosave}.docx";
+            //    Process.Start(process);
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show($"Não foi possível abrir o arquivo\n{ex.Message}");
+            //}
         }
 
         public void FecharFrequencia()
@@ -519,6 +532,27 @@ namespace Sentinels2
             catch (Exception ex)
             {
                 MessageBox.Show($"Oh, fézes!\n\n{ex.Message}");
+            }
+        }
+
+        private void btOpEspecial_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (var item in EscalaCRUD.GetAll().ToList())
+                {
+                    if(item.AfastamentoVGF > 0)
+                    {
+                        Afastamento realMotivo = AfastamentoCRUD.Get(p => p.Id == item.AfastamentoVGF).Single();
+                        item.Motivo = realMotivo.TipoAfastamento;
+                        EscalaCRUD.Update(item);
+                    }
+                }
+                MessageBox.Show("Say at the Devil... I Am the Storn!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Operção especial falhou!\n{ex.Message}");
             }
         }
     }

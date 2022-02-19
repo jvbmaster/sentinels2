@@ -58,6 +58,7 @@ namespace Sentinels2
             this.btSend = new System.Windows.Forms.Button();
             this.btnRport = new System.Windows.Forms.Button();
             this.dgvDataPerson = new System.Windows.Forms.DataGridView();
+            this.btOpEspecial = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -83,6 +84,7 @@ namespace Sentinels2
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.btOpEspecial);
             this.panel1.Controls.Add(this.btnSendMsg);
             this.panel1.Controls.Add(this.btFrequencia);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -380,6 +382,16 @@ namespace Sentinels2
             this.dgvDataPerson.TabIndex = 11;
             this.dgvDataPerson.MouseCaptureChanged += new System.EventHandler(this.dgvDataPerson_MouseCaptureChanged);
             // 
+            // btOpEspecial
+            // 
+            this.btOpEspecial.Location = new System.Drawing.Point(714, 181);
+            this.btOpEspecial.Name = "btOpEspecial";
+            this.btOpEspecial.Size = new System.Drawing.Size(144, 57);
+            this.btOpEspecial.TabIndex = 4;
+            this.btOpEspecial.Text = "Operação Especial";
+            this.btOpEspecial.UseVisualStyleBackColor = true;
+            this.btOpEspecial.Click += new System.EventHandler(this.btOpEspecial_Click);
+            // 
             // WorkflowByPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -447,5 +459,6 @@ namespace Sentinels2
         private Button btnSendMsg;
         private Button btSend;
         private Button btConvoc;
+        private Button btOpEspecial;
     }
 }
